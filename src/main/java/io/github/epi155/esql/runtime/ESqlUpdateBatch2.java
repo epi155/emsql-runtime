@@ -1,10 +1,12 @@
 package io.github.epi155.esql.runtime;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface ESqlUpdateBatch2<U,V> extends AutoCloseable {
-    void lazyUpdate(U u, V v) throws SQLException;
-    void flush() throws SQLException;
-    @Override
-    void close() throws SQLException;
+public abstract class ESqlUpdateBatch2<U,V> extends BatchAction {
+    protected ESqlUpdateBatch2(PreparedStatement ps, int batchSize) {
+        super(ps, batchSize);
+    }
+
+    public  abstract void lazyUpdate(U u, V v) throws SQLException;
 }

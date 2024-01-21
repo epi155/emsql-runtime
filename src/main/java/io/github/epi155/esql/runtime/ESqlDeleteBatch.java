@@ -1,10 +1,12 @@
 package io.github.epi155.esql.runtime;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface ESqlDeleteBatch <T> extends AutoCloseable {
-    void lazyDelete(T t) throws SQLException;
-    void flush() throws SQLException;
-    @Override
-    void close() throws SQLException;
+public abstract class ESqlDeleteBatch <T> extends BatchAction {
+    protected ESqlDeleteBatch(PreparedStatement ps, int batchSize) {
+        super(ps, batchSize);
+    }
+
+    public  abstract void lazyDelete(T t) throws SQLException;
 }
