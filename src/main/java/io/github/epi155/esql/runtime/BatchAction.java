@@ -1,5 +1,7 @@
 package io.github.epi155.esql.runtime;
 
+import lombok.Setter;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.function.Consumer;
@@ -7,6 +9,7 @@ import java.util.function.Consumer;
 abstract class  BatchAction implements AutoCloseable {
     protected final PreparedStatement ps;
     private final int batchSize;
+    @Setter
     private Consumer<int[]> trigger;
     private int pending = 0;
 
@@ -37,7 +40,4 @@ abstract class  BatchAction implements AutoCloseable {
         ps.close();
     }
 
-    public void setTrigger(Consumer<int[]> trigger) {
-        this.trigger = trigger;
-    }
 }

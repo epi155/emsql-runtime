@@ -1,12 +1,18 @@
 package io.github.epi155.esql.runtime;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.function.Supplier;
 
+@Slf4j
 public class ESQL {
     private ESQL() {}
 
@@ -136,5 +142,16 @@ public class ESQL {
 
     private static String capitalize(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    public static void showQuery(String query, Supplier<List> listSupplier) {
+        log.info("Query: {}", query);
+        if (log.isTraceEnabled()) {
+            List parms = listSupplier.get();
+            int k= 0;
+            for(val parm: parms) {
+                log.info("i[{}] = {}", ++k, parm);
+            }
+        }
     }
 }

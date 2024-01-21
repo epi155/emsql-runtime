@@ -12,6 +12,21 @@
     <url>https://github.com/epi155/esql-runtime</url>
     <inceptionYear>2024</inceptionYear>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+    </dependencies>
+
     <developers>
         <developer>
             <name>Enrico Pistolesi</name>

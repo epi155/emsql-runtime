@@ -8,5 +8,12 @@ public abstract class ESqlInsertBatch2<U,V> extends BatchAction {
         super(ps, batchSize);
     }
 
+    /**
+     * Append data for batch insert
+     *
+     * @param u first column value
+     * @param v second column value
+     * @throws SQLException SQL Error
+     */
     public  abstract void lazyInsert(U u, V v) throws SQLException;
 }

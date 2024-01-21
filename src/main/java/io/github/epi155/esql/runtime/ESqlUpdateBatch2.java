@@ -8,5 +8,12 @@ public abstract class ESqlUpdateBatch2<U,V> extends BatchAction {
         super(ps, batchSize);
     }
 
+    /**
+     * Append data for batch update
+     *
+     * @param u first parameter for select data to be updated
+     * @param v second parameter for select data to be updated
+     * @throws SQLException SQL Error
+     */
     public  abstract void lazyUpdate(U u, V v) throws SQLException;
 }

@@ -3,10 +3,16 @@ package io.github.epi155.esql.runtime;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class ESqlDeleteBatch <T> extends BatchAction {
+public abstract class ESqlDeleteBatch <I> extends BatchAction {
     protected ESqlDeleteBatch(PreparedStatement ps, int batchSize) {
         super(ps, batchSize);
     }
 
-    public  abstract void lazyDelete(T t) throws SQLException;
+    /**
+     * Append data for batch delete
+     *
+     * @param i parameter (or wrapper class) for select data to be deleted
+     * @throws SQLException SQL Error
+     */
+    public  abstract void lazyDelete(I i) throws SQLException;
 }

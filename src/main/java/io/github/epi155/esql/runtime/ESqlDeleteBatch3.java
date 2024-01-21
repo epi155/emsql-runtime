@@ -8,5 +8,13 @@ public abstract class ESqlDeleteBatch3<U, V, W> extends BatchAction {
         super(ps, batchSize);
     }
 
+    /**
+     * Append data for batch delete
+     *
+     * @param u first parameter for select data to be deleted
+     * @param v second parameter for select data to be deleted
+     * @param w third parameter for select data to be deleted
+     * @throws SQLException SQL Error
+     */
     public  abstract void lazyDelete(U u, V v, W w) throws SQLException;
 }
