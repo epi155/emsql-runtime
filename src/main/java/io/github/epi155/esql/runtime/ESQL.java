@@ -1,0 +1,140 @@
+package io.github.epi155.esql.runtime;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public class ESQL {
+    private ESQL() {}
+
+    public static Boolean box(boolean v, boolean isNull) {
+        return isNull ? null : v;
+    }
+    public static Short box(short v, boolean isNull) {
+        return isNull ? null : v;
+    }
+    public static Integer box(int v, boolean isNull) {
+        return isNull ? null : v;
+    }
+    public static Long box(long v, boolean isNull) {
+        return isNull ? null : v;
+    }
+    public static LocalDate toLocalDate(Date d) {
+        return d==null ? null : d.toLocalDate();
+    }
+    public static LocalDateTime toLocalDateTime(Timestamp d) {
+        return d==null ? null : d.toLocalDateTime();
+    }
+
+    public static void set(Object target, String path, Object value) {
+        String[] pieces = path.split("[.]");
+        Object currentObject = passesThrough(target, pieces, 1);
+        String setterName = "set" + capitalize(pieces[pieces.length-1]);
+        Method[] methods = currentObject.getClass().getMethods();
+        for (Method method : methods) {
+            if (method.getName().equals(setterName) &&
+                    method.getParameterCount() == 1 && (
+                    value == null ||
+                            canAssign(method.getParameterTypes()[0], value.getClass())
+            )) {
+                try {
+                    method.invoke(currentObject, value);
+                } catch (IllegalArgumentException e) {
+                    throw new ESqlReflectException("IllegalArgument in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                } catch (IllegalAccessException e) {
+                    throw new ESqlReflectException("IllegalAccess in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                } catch (InvocationTargetException e) {
+                    throw new ESqlReflectException("InvocationTarget in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                }
+                return;
+            }
+        }
+        throw new ESqlReflectException("No method " +currentObject.getClass() + "." + setterName + "("+value.getClass()+")");
+    }
+    public static <T> T get(Object target, String path, Class<T> claz) {
+        String[] pieces = path.split("[.]");
+        return claz.cast(passesThrough(target, pieces, 0));
+    }
+    private static Object passesThrough(Object target, String[] pieces, int limit) {
+        Object currentObject = target;
+        for (int k = 0; k < pieces.length - limit; k++) {
+            String getterName = "get" + capitalize(pieces[k]);
+            try {
+                Method getter = currentObject.getClass().getMethod(getterName);
+                currentObject = nextObject(getter, currentObject, limit>0);
+            } catch (NoSuchMethodException e) {
+                throw new ESqlReflectException("No method " +currentObject.getClass() + "." + getterName + "()", e);
+            }
+        }
+        return currentObject;
+    }
+
+    private static Object nextObject(Method getter, Object object, boolean create) {
+        try {
+            Object result = getter.invoke(object);
+            if (result == null && create) {
+                Class<?> type = getter.getReturnType();
+                result = createResult(type);
+                storeResult(result, type, object, getter.getName().replace('g','s'));
+            }
+            return result;
+        } catch (IllegalAccessException e) {
+            throw new ESqlReflectException("IllegalAccess in " +object.getClass() + "." + getter.getName() + "()", e);
+        } catch (InvocationTargetException e) {
+            throw new ESqlReflectException("InvocationTarget in " +object.getClass() + "." + getter.getName() + "()", e);
+        }
+    }
+
+    private static void storeResult(Object result, Class<?> type, Object object, String setterName) {
+        try {
+            Method setter = object.getClass().getMethod(setterName, type);
+            setter.invoke(object, result);
+        } catch (NoSuchMethodException e) {
+            throw new ESqlReflectException("No setter - "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+        } catch (InvocationTargetException e) {
+            throw new ESqlReflectException("Invocation "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+        } catch (IllegalAccessException e) {
+            throw new ESqlReflectException("Access "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+        }
+    }
+
+    private static Object createResult(Class<?> type) {
+        try {
+            Constructor<?> ctor = type.getConstructor();
+            return  ctor.newInstance();
+        } catch (NoSuchMethodException e) {
+            throw new ESqlReflectException("No Constructor for "+type.getName(), e);
+        } catch (InvocationTargetException e) {
+            throw new ESqlReflectException("Invocation Constructor for "+type.getName(), e);
+        } catch (InstantiationException e) {
+            throw new ESqlReflectException("Instantiation Constructor for "+type.getName(), e);
+        } catch (IllegalAccessException e) {
+            throw new ESqlReflectException("Access Constructor for "+type.getName(), e);
+        }
+    }
+
+    private static boolean canAssign(Class<?> src, Class<?> dst) {
+        if (dst.isAssignableFrom(src))
+            return true;
+        if (src == int.class)
+            return dst == Integer.class;
+        if (src == long.class)
+            return dst == Long.class;
+        if (src == short.class)
+            return dst == Short.class;
+        if (src == boolean.class)
+            return dst == Boolean.class;
+        if (src == byte.class)
+            return dst == Byte.class;
+        if (src == char.class)
+            return dst == Character.class;
+        return false;
+    }
+
+    private static String capitalize(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+}
