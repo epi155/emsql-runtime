@@ -6,10 +6,10 @@ import lombok.val;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -144,13 +144,13 @@ public class ESQL {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-    public static void showQuery(String query, Supplier<List> listSupplier) {
-        log.info("Query: {}", query);
+    public static void showQuery(String query, Supplier<Object[]> listSupplier) {
+        log.debug("Query: {}", query);
         if (log.isTraceEnabled()) {
-            List parms = listSupplier.get();
+            Object[] parms = listSupplier.get();
             int k= 0;
             for(val parm: parms) {
-                log.info("i[{}] = {}", ++k, parm);
+                log.trace("i[{}] = {}", ++k, parm);
             }
         }
     }
