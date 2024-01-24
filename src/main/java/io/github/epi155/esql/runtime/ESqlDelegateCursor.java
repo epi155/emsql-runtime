@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public interface ESqlDelegateCursor extends AutoCloseable {
     boolean hasNext() throws SQLException;
-    void next() throws SQLException;
+    void fetchNext() throws SQLException;
     @Override
     void close() throws SQLException;
 }
