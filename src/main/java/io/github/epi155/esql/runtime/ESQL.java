@@ -4,9 +4,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ESQL {
     private ESQL() {}
@@ -23,16 +25,27 @@ public class ESQL {
     public static Long box(long v, boolean isNull) {
         return isNull ? null : v;
     }
+    public static Double box(double v, boolean isNull) {
+        return isNull ? null : v;
+    }
+    public static Float box(float v, boolean isNull) {
+        return isNull ? null : v;
+    }
     public static LocalDate toLocalDate(Date d) {
         return d==null ? null : d.toLocalDate();
     }
     public static LocalDateTime toLocalDateTime(Timestamp d) {
         return d==null ? null : d.toLocalDateTime();
     }
+    public static LocalTime toLocalTime(Time d) {
+        return d==null ? null : d.toLocalTime();
+    }
 
+    private static final int IS_SET = 1;
+    private static final int IS_GET = 0;
     public static void set(Object target, String path, Object value) {
         String[] pieces = path.split("[.]");
-        Object currentObject = passesThrough(target, pieces, 1);
+        Object currentObject = passesThrough(target, pieces, IS_SET);
         String setterName = "set" + capitalize(pieces[pieces.length-1]);
         Method[] methods = currentObject.getClass().getMethods();
         for (Method method : methods) {
@@ -57,7 +70,7 @@ public class ESQL {
     }
     public static <T> T get(Object target, String path, Class<T> claz) {
         String[] pieces = path.split("[.]");
-        return claz.cast(passesThrough(target, pieces, 0));
+        return claz.cast(passesThrough(target, pieces, IS_GET));
     }
     private static Object passesThrough(Object target, String[] pieces, int limit) {
         Object currentObject = target;
@@ -65,7 +78,9 @@ public class ESQL {
             String getterName = "get" + capitalize(pieces[k]);
             try {
                 Method getter = currentObject.getClass().getMethod(getterName);
-                currentObject = nextObject(getter, currentObject, limit>0);
+                currentObject = nextObject(getter, currentObject, limit==IS_SET);
+                if (currentObject==null)    // IS_GET
+                    break;
             } catch (NoSuchMethodException e) {
                 throw new ESqlReflectException("No method " +currentObject.getClass() + "." + getterName + "()", e);
             }
@@ -132,6 +147,10 @@ public class ESQL {
             return dst == Byte.class;
         if (src == char.class)
             return dst == Character.class;
+        if (src == double.class)
+            return dst == Double.class;
+        if (src == float.class)
+            return dst == Float.class;
         return false;
     }
 
