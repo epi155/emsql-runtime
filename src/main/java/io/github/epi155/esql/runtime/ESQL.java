@@ -90,6 +90,7 @@ public class ESQL {
 
     private static Object nextObject(Method getter, Object object, boolean create) {
         try {
+            getter.setAccessible(true);
             Object result = getter.invoke(object);
             if (result == null && create) {
                 Class<?> type = getter.getReturnType();
@@ -107,6 +108,7 @@ public class ESQL {
     private static void storeResult(Object result, Class<?> type, Object object, String setterName) {
         try {
             Method setter = object.getClass().getMethod(setterName, type);
+            setter.setAccessible(true);
             setter.invoke(object, result);
         } catch (NoSuchMethodException e) {
             throw new ESqlReflectException("No setter - "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
