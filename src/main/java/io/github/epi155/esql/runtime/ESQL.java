@@ -45,7 +45,7 @@ public class ESQL {
     private static final int IS_GET = 0;
     public static void set(Object target, String path, Object value) {
         String[] pieces = path.split("[.]");
-        Object currentObject = passesThrough(target, pieces, IS_SET);
+        Object currentObject = passesThrough(target, pieces, IS_SET, false);
         String setterName = "set" + capitalize(pieces[pieces.length-1]);
         Method[] methods = currentObject.getClass().getMethods();
         for (Method method : methods) {
@@ -70,12 +70,20 @@ public class ESQL {
     }
     public static <T> T get(Object target, String path, Class<T> claz) {
         String[] pieces = path.split("[.]");
-        return claz.cast(passesThrough(target, pieces, IS_GET));
+        boolean is = (claz == boolean.class);
+//        return claz.cast(passesThrough(target, pieces, IS_GET, is));
+        //noinspection unchecked
+        return (T) passesThrough(target, pieces, IS_GET, is);
     }
-    private static Object passesThrough(Object target, String[] pieces, int limit) {
+    private static Object passesThrough(Object target, String[] pieces, int limit, boolean is) {
         Object currentObject = target;
         for (int k = 0; k < pieces.length - limit; k++) {
-            String getterName = "get" + capitalize(pieces[k]);
+            String getterName;
+            if (limit == IS_GET && k+1 == pieces.length - limit && is) {
+                getterName = "is" + capitalize(pieces[k]);
+            } else {
+                getterName = "get" + capitalize(pieces[k]);
+            }
             try {
                 Method getter = currentObject.getClass().getMethod(getterName);
                 currentObject = nextObject(getter, currentObject, limit==IS_SET);
