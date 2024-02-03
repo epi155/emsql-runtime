@@ -1,4 +1,4 @@
-package io.github.epi155.esql.runtime;
+package io.github.epi155.emsql.runtime;
 
 public class ESqlReflectException extends RuntimeException {
     ESqlReflectException(String message) {

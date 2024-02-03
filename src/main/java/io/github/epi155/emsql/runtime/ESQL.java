@@ -1,4 +1,4 @@
-package io.github.epi155.esql.runtime;
+package io.github.epi155.emsql.runtime;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

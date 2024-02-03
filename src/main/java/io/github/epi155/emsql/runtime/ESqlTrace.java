@@ -1,4 +1,4 @@
-package io.github.epi155.esql.runtime;
+package io.github.epi155.emsql.runtime;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

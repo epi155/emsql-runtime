@@ -1,6 +1,6 @@
 package io.github.epi155.esql.test;
 
-import io.github.epi155.esql.runtime.ESQL;
+import io.github.epi155.emsql.runtime.ESQL;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
