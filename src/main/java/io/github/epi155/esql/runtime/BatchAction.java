@@ -4,13 +4,12 @@ import lombok.Setter;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.function.Consumer;
 
 abstract class  BatchAction implements AutoCloseable {
     protected final PreparedStatement ps;
     private final int batchSize;
     @Setter
-    private Consumer<int[]> trigger;
+    private EConsumer<int[]> trigger;
     private int pending = 0;
 
     protected BatchAction(PreparedStatement ps, int batchSize) {
