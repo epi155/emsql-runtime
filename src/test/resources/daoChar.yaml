@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoChar
+declare:
+  idChar: long
+  char01: Char?
+  char02: Char?
+  char03: Char?
+  char04: Char?
+  char11: Char
+  char12: Char
+  char13: Char
+  char14: Char
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tchar (
+          char01,
+          char11
+        ) values (
+          :char01,
+          :char11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        ) 
+        returning char13 into :char13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        ) 
+        returning char03 into :char03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        ) 
+        returning char13, char14 
+        into :char13, :char14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tchar (
+          char01,
+          char02,
+          char11,
+          char12
+        ) values (
+          :char01,
+          :char02,
+          :char11,
+          :char12 
+        ) 
+        returning char03, char04 
+        into :char03, :char04
+
+  - methodName: findCharAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          char01,
+          char11
+        into
+          :char01,
+          :char11 
+        from tchar
+        where id_Char = :idChar
+
+  - methodName: findCharAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          char01,
+          char11
+        into
+          :char01,
+          :char11 
+        from tchar
+        where id_Char = :idChar
+
+  - methodName: findCharAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          char01
+        into
+          :char01
+        from tchar
+        where char02 = :char02
+
+  - methodName: findCharAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          char11
+        into
+          :char11
+        from tchar
+        where char12 = :char12
+
+  - methodName: findCharAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          char01,
+          char11
+        into
+          :char01,
+          :char11 
+        from tchar
+        where id_Char = :idChar

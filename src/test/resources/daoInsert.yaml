@@ -1,0 +1,121 @@
+packageName: com.example.emsql
+className: DaoInsert
+declare:
+  idBool: long
+  bool01: Bool?
+  bool02: Bool?
+  bool03: Bool?
+  bool04: Bool?
+  bool11: Bool
+  bool12: Bool
+  bool13: Bool
+  bool14: Bool
+methods:
+  - methodName: insert01
+    perform: !Insert
+      input:
+        delegate: no
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02,
+          bool11,
+          bool12
+        ) values (
+          :bool01,
+          :bool02,
+          :bool11,
+          :bool12
+        ) 
+
+  - methodName: insert02
+    perform: !InsertReturnKeys
+      input:
+        delegate: no
+      output:
+        fields:
+          idBool: long
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02,
+          bool11,
+          bool12
+        ) values (
+          :bool01,
+          :bool02,
+          :bool11,
+          :bool12
+        )
+
+  - methodName: insert22
+    perform: !InsertReturnKeys
+      timeout: 5
+      input:
+        delegate: no
+      output:
+        fields:
+          idBool: long
+          bool14: bool
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02,
+          bool11,
+          bool12
+        ) values (
+          :bool01,
+          :bool02,
+          :bool11,
+          :bool12
+        ) 
+
+  - methodName: insert03
+    perform: !InsertBatch
+      input:
+        delegate: no
+      batch-size: 500
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02,
+          bool11,
+          bool12
+        ) values (
+          :bool01,
+          :bool02,
+          :bool11,
+          :bool12
+        )
+
+  - methodName: insert04
+    perform: !InsertBatch
+      timeout: 5
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02
+        ) values (
+          :bool01,
+          :bool02
+        ) 
+
+  - methodName: insert05
+    perform: !InsertReturnInto
+      input:
+        delegate: no
+      output:
+        delegate: no
+      execSql: |
+        insert into tbool (
+          bool01,
+          bool02,
+          bool11,
+          bool12
+        ) values (
+          :bool01,
+          :bool02,
+          :bool11,
+          :bool12
+        )
+        returning idBool into :idBool

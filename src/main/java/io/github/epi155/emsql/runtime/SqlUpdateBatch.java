@@ -3,8 +3,8 @@ package io.github.epi155.emsql.runtime;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class ESqlUpdateBatch<I> extends BatchAction {
-    protected ESqlUpdateBatch(PreparedStatement ps, int batchSize) {
+public abstract class SqlUpdateBatch<I> extends BatchAction {
+    protected SqlUpdateBatch(PreparedStatement ps, int batchSize) {
         super(ps, batchSize);
     }
 

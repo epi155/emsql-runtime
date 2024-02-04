@@ -1,0 +1,113 @@
+packageName: com.example.emsql
+className: DaoSelect
+declare:
+  idBool: long
+  bool01: Bool?
+  bool02: Bool?
+  bool03: Bool?
+  bool04: Bool?
+  bool11: Bool
+  bool12: Bool
+  bool13: Bool
+  bool14: Bool
+  nmCount: int
+methods:
+  - methodName: select01
+    perform: !SelectSingle
+      timeout: 5
+      input:
+        delegate: no
+      output:
+        delegate: no
+      execSql: |
+        select
+          bool01,
+          bool11,
+          bool02
+        into
+          :bool01,
+          :bool11,
+          :bool02
+        from tbool
+        where bool12 = :bool12 
+
+  - methodName: select11
+    perform: !SelectSingle
+      timeout: 5
+      input:
+        delegate: no
+      output:
+        delegate: yes
+      execSql: |
+        select
+          bool01,
+          bool11,
+          bool02
+        into
+          :bool01,
+          :bool11,
+          :bool02
+        from tbool
+        where bool12 = :bool12 
+
+  - methodName: select02
+    perform: !SelectOptional
+      timeout: 5
+      input:
+        delegate: no
+      output:
+        delegate: no
+      execSql: |
+        select
+          bool01,
+          bool11,
+          bool02
+        into
+          :bool01,
+          :bool11,
+          :bool02
+        from tbool
+        where bool12 = :bool12 
+
+  - methodName: select03
+    perform: !SelectSingle
+      execSql: |
+        select
+          count(*) 
+        into
+          :nmCount
+        from tbool
+        where bool12 = :bool12 
+
+  - methodName: select04
+    perform: !SelectList
+      fetchSize: 256
+      timeout: 5
+      input:
+        delegate: no
+      output:
+        reflect: no
+      execSql: |
+        select
+          bool01,
+          bool11,
+          bool02
+        into
+          :bool01,
+          :bool11,
+          :bool02
+        from tbool
+        where bool12 = :bool12 
+
+  - methodName: select05
+    perform: !SelectList
+      execSql: |
+        select
+          bool01
+        into
+          :bool01
+        from tbool
+        where bool12 = :bool12
+        and   bool02 = :bool02
+        and   bool03 = :bool03
+        and   bool13 = :bool13

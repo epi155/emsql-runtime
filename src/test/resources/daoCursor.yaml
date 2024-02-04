@@ -1,0 +1,109 @@
+packageName: com.example.emsql
+className: DaoCursor
+declare:
+  idBool: long
+  bool01: Bool?
+  bool02: Bool?
+  bool03: Bool?
+  bool04: Bool?
+  bool11: Bool
+  bool12: Bool
+  bool13: Bool
+  bool14: Bool
+methods:
+  - methodName: cursor01
+    perform: !CursorForSelect
+      mode: ip
+      fetchSize: 250
+      execSql: |
+        select 
+          bool01,
+          bool11
+        into
+          :bool01,
+          :bool11 
+        from tbool
+
+  - methodName: cursor02
+    perform: !CursorForSelect
+      mode: fp
+      execSql: |
+        select 
+          bool01 - 1,
+          bool11      -- sql comment
+        into
+          :bool01,
+          :bool11 
+        from tbool
+        where bool02 = :bool02
+
+  - methodName: cursor03
+    perform: !CursorForSelect
+      fetchSize: 250
+      execSql: |
+        select 
+          bool01,
+          bool11
+        into
+          :bool01,
+          :bool11 
+        from tbool
+        where bool02 = :bool02
+        and   bool12 = :bool12
+        and   bool03 = :bool03
+        and   bool13 = :bool13
+
+  - methodName: cursor04
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        delegate: yes
+      timeout: 5
+      execSql: |
+        select 
+          bool01,
+          bool11
+        into
+          :bool01,
+          :bool11 
+        from tbool
+        where bool02 = :bool02
+        and   bool12 = :bool12
+        and   bool03 = :bool03
+        and   bool13 = :bool13
+
+  - methodName: cursor05
+    perform: !CursorForSelect
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+      execSql: |
+        select 
+          bool01,
+          bool11
+        into
+          :bool01,
+          :bool11 
+        from tbool
+        where bool02 = :bool02
+        and   bool12 = :bool12
+        and   bool03 = :bool03
+        and   bool13 = :bool13
+
+  - methodName: cursor05
+    perform: !CursorForSelect
+      execSql: |
+        -- dummy duplicate method 
+
+  - methodName: cursor06
+    perform: !CursorForSelect
+      execSql: |
+        select 
+          bool01,
+          bool11
+        into
+          :bool01,
+          :bool11 
+        from tbool

@@ -1,0 +1,180 @@
+packageName: com.example.emsql
+className: DaoTime
+declare:
+  idTime: long
+  time01: Time?
+  time02: Time?
+  time03: Time?
+  time04: Time?
+  time11: Time
+  time12: Time
+  time13: Time
+  time14: Time
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into ttime (
+          time01,
+          time11
+        ) values (
+          :time01,
+          :time11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        ) 
+        returning time13 into :time13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        ) 
+        returning time03 into :time03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      timeout: 5
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        ) 
+        returning time13, time14 
+        into :time13, :time14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttime (
+          time01,
+          time02,
+          time11,
+          time12
+        ) values (
+          :time01,
+          :time02,
+          :time11,
+          :time12 
+        ) 
+        returning time03, time04 
+        into :time03, :time04
+
+  - methodName: findTimeAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          time01,
+          time11
+        into
+          :time01,
+          :time11 
+        from ttime
+        where id_Time = :idTime
+
+  - methodName: findTimeAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          time01,
+          time11
+        into
+          :time01,
+          :time11 
+        from ttime
+        where id_Time = :idTime
+
+  - methodName: findTimeAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          time01
+        into
+          :time01
+        from ttime
+        where time02 = :time02
+
+  - methodName: findTimeAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          time11
+        into
+          :time11
+        from ttime
+        where time12 = :time12
+
+  - methodName: findTimeAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          time01,
+          time11
+        into
+          :time01,
+          :time11 
+        from ttime
+        where id_Time = :idTime

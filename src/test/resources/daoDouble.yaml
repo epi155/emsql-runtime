@@ -1,0 +1,180 @@
+packageName: com.example.emsql
+className: DaoDouble
+declare:
+  idDouble: long
+  double01: Double?
+  double02: Double?
+  double03: Double?
+  double04: Double?
+  double11: Double
+  double12: Double
+  double13: Double
+  double14: Double
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tdouble (
+          double01,
+          double11
+        ) values (
+          :double01,
+          :double11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        ) 
+        returning double13 into :double13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        ) 
+        returning double03 into :double03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      timeout: 5
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        ) 
+        returning double13, double14 
+        into :double13, :double14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tdouble (
+          double01,
+          double02,
+          double11,
+          double12
+        ) values (
+          :double01,
+          :double02,
+          :double11,
+          :double12 
+        ) 
+        returning double03, double04 
+        into :double03, :double04
+
+  - methodName: findDoubleAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          double01,
+          double11
+        into
+          :double01,
+          :double11 
+        from tdouble
+        where id_Double = :idDouble
+
+  - methodName: findDoubleAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          double01,
+          double11
+        into
+          :double01,
+          :double11 
+        from tdouble
+        where id_Double = :idDouble
+
+  - methodName: findDoubleAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          double01
+        into
+          :double01
+        from tdouble
+        where double02 = :double02
+
+  - methodName: findDoubleAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          double11
+        into
+          :double11
+        from tdouble
+        where double12 = :double12
+
+  - methodName: findDoubleAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          double01,
+          double11
+        into
+          :double01,
+          :double11 
+        from tdouble
+        where id_Double = :idDouble

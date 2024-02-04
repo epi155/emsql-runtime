@@ -1,0 +1,180 @@
+packageName: com.example.emsql
+className: DaoLocalTime
+declare:
+  idLocalTime: long
+  localTime01: LocalTime?
+  localTime02: LocalTime?
+  localTime03: LocalTime?
+  localTime04: LocalTime?
+  localTime11: LocalTime
+  localTime12: LocalTime
+  localTime13: LocalTime
+  localTime14: LocalTime
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime11
+        ) values (
+          :localTime01,
+          :localTime11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        ) 
+        returning localTime13 into :localTime13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        ) 
+        returning localTime03 into :localTime03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      timeout: 5
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        ) 
+        returning localTime13, localTime14 
+        into :localTime13, :localTime14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalTime (
+          localTime01,
+          localTime02,
+          localTime11,
+          localTime12
+        ) values (
+          :localTime01,
+          :localTime02,
+          :localTime11,
+          :localTime12 
+        ) 
+        returning localTime03, localTime04 
+        into :localTime03, :localTime04
+
+  - methodName: findLocalTimeAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          localTime01,
+          localTime11
+        into
+          :localTime01,
+          :localTime11 
+        from tlocalTime
+        where id_LocalTime = :idLocalTime
+
+  - methodName: findLocalTimeAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          localTime01,
+          localTime11
+        into
+          :localTime01,
+          :localTime11 
+        from tlocalTime
+        where id_LocalTime = :idLocalTime
+
+  - methodName: findLocalTimeAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          localTime01
+        into
+          :localTime01
+        from tlocalTime
+        where localTime02 = :localTime02
+
+  - methodName: findLocalTimeAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          localTime11
+        into
+          :localTime11
+        from tlocalTime
+        where localTime12 = :localTime12
+
+  - methodName: findLocalTimeAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          localTime01,
+          localTime11
+        into
+          :localTime01,
+          :localTime11 
+        from tlocalTime
+        where id_LocalTime = :idLocalTime

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 @Slf4j
-public class ESqlTrace {
+public class SqlTrace {
     public static void showQuery(String query, ESupplier<Object[]> listSupplier) {
         log.debug("Query: {}", query);
         if (log.isTraceEnabled()) {

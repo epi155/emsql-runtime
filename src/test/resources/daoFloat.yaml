@@ -1,0 +1,180 @@
+packageName: com.example.emsql
+className: DaoFloat
+declare:
+  idFloat: long
+  float01: Float?
+  float02: Float?
+  float03: Float?
+  float04: Float?
+  float11: Float
+  float12: Float
+  float13: Float
+  float14: Float
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tfloat (
+          float01,
+          float11
+        ) values (
+          :float01,
+          :float11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        ) 
+        returning float13 into :float13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        ) 
+        returning float03 into :float03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      timeout: 5
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        ) 
+        returning float13, float14 
+        into :float13, :float14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tfloat (
+          float01,
+          float02,
+          float11,
+          float12
+        ) values (
+          :float01,
+          :float02,
+          :float11,
+          :float12 
+        ) 
+        returning float03, float04 
+        into :float03, :float04
+
+  - methodName: findFloatAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          float01,
+          float11
+        into
+          :float01,
+          :float11 
+        from tfloat
+        where id_Float = :idFloat
+
+  - methodName: findFloatAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          float01,
+          float11
+        into
+          :float01,
+          :float11 
+        from tfloat
+        where id_Float = :idFloat
+
+  - methodName: findFloatAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          float01
+        into
+          :float01
+        from tfloat
+        where float02 = :float02
+
+  - methodName: findFloatAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          float11
+        into
+          :float11
+        from tfloat
+        where float12 = :float12
+
+  - methodName: findFloatAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          float01,
+          float11
+        into
+          :float01,
+          :float11 
+        from tfloat
+        where id_Float = :idFloat

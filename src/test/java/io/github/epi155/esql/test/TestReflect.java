@@ -1,6 +1,6 @@
 package io.github.epi155.esql.test;
 
-import io.github.epi155.emsql.runtime.ESQL;
+import io.github.epi155.emsql.runtime.EmSQL;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -24,16 +24,16 @@ class TestReflect {
     @Test
     void testBoolean1() {
         HiBool hi = new HiBool();
-        ESQL.set(hi, "one", true);
-        boolean v = ESQL.get(hi, "one", boolean.class);
+        EmSQL.set(hi, "one", true);
+        boolean v = EmSQL.get(hi, "one", boolean.class);
         log.info("get result: {}", v);
         Assertions.assertTrue(v);
     }
     @Test
     void testBoolean2() {
         HiBool hi = new HiBool();
-        ESQL.set(hi, "two", null);
-        Boolean v = ESQL.get(hi, "two", Boolean.class);
+        EmSQL.set(hi, "two", null);
+        Boolean v = EmSQL.get(hi, "two", Boolean.class);
         log.info("get result: {}", v);
         Assertions.assertNull(v);
     }
@@ -41,16 +41,16 @@ class TestReflect {
     @Test
     void testBoolean11() {
         HiBool hi = new HiBool();
-        ESQL.set(hi, "next.one", true);
-        boolean v = ESQL.get(hi, "next.one", boolean.class);
+        EmSQL.set(hi, "next.one", true);
+        boolean v = EmSQL.get(hi, "next.one", boolean.class);
         log.info("get result: {}", v);
         Assertions.assertTrue(v);
     }
     @Test
     void testBoolean12() {
         HiBool hi = new HiBool();
-        ESQL.set(hi, "next.two", null);
-        Boolean v = ESQL.get(hi, "next.two", Boolean.class);
+        EmSQL.set(hi, "next.two", null);
+        Boolean v = EmSQL.get(hi, "next.two", Boolean.class);
         log.info("get result: {}", v);
         Assertions.assertNull(v);
     }

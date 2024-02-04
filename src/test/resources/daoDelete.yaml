@@ -1,0 +1,68 @@
+packageName: com.example.emsql
+className: DaoDelete
+declare:
+  idBool: long
+  bool01: Bool?
+  bool02: Bool?
+  bool03: Bool?
+  bool04: Bool?
+  bool11: Bool
+  bool12: Bool
+  bool13: Bool
+  bool14: Bool
+methods:
+  - methodName: delete01
+    perform: !Delete
+      execSql: |
+        delete from tbool
+        where bool01 = :bool01 
+
+  - methodName: delete02
+    perform: !Delete
+      execSql: |
+        delete from tbool
+        where bool01 = :bool01
+        and   bool11 = :bool11
+        and   bool02 = :bool02
+
+  - methodName: delete03
+    perform: !Delete
+      timeout: 5
+      input:
+        delegate: no
+      execSql: |
+        delete from tbool
+        where bool01 = :bool01
+        and   bool11 = :bool11
+        and   bool02 = :bool02
+        and   bool12 = :bool12
+        and   bool03 = :bool03
+
+  - methodName: delete11
+    perform: !DeleteBatch
+      timeout: 5
+      execSql: |
+        delete from tbool
+        where bool01 = bool01 
+
+  - methodName: delete12
+    perform: !DeleteBatch
+      batchSize: 1000
+      input:
+        delegate: no
+      execSql: |
+        delete from tbool
+        where bool01 = :bool01
+        and   bool11 = :bool11
+        and   bool02 = :bool02
+
+  - methodName: delete13
+    perform: !DeleteBatch
+      execSql: |
+        delete from tbool
+        where bool01 = :bool01
+        and   bool11 = :bool11
+        and   bool02 = :bool02
+        and   bool12 = :bool12
+        and   bool03 = :bool03
+

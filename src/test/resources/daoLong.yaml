@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoLong
+declare:
+  idLong: long
+  long01: Long?
+  long02: Long?
+  long03: Long?
+  long04: Long?
+  long11: Long
+  long12: Long
+  long13: Long
+  long14: Long
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tlong (
+          long01,
+          long11
+        ) values (
+          :long01,
+          :long11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        ) 
+        returning long13 into :long13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        ) 
+        returning long03 into :long03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        ) 
+        returning long13, long14 
+        into :long13, :long14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlong (
+          long01,
+          long02,
+          long11,
+          long12
+        ) values (
+          :long01,
+          :long02,
+          :long11,
+          :long12 
+        ) 
+        returning long03, long04 
+        into :long03, :long04
+
+  - methodName: findLongAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          long01,
+          long11
+        into
+          :long01,
+          :long11 
+        from tlong
+        where id_Long = :idLong
+
+  - methodName: findLongAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          long01,
+          long11
+        into
+          :long01,
+          :long11 
+        from tlong
+        where id_Long = :idLong
+
+  - methodName: findLongAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          long01
+        into
+          :long01
+        from tlong
+        where long02 = :long02
+
+  - methodName: findLongAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          long11
+        into
+          :long11
+        from tlong
+        where long12 = :long12
+
+  - methodName: findLongAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          long01,
+          long11
+        into
+          :long01,
+          :long11 
+        from tlong
+        where id_Long = :idLong

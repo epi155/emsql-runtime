@@ -3,8 +3,8 @@ package io.github.epi155.emsql.runtime;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class ESqlDeleteBatch <I> extends BatchAction {
-    protected ESqlDeleteBatch(PreparedStatement ps, int batchSize) {
+public abstract class SqlDeleteBatch<I> extends BatchAction {
+    protected SqlDeleteBatch(PreparedStatement ps, int batchSize) {
         super(ps, batchSize);
     }
 

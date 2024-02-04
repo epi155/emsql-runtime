@@ -1,0 +1,64 @@
+packageName: com.example.emsql
+className: DaoBatch
+declare:
+  idBool: long
+  bool01: Bool?
+  bool02: Bool?
+  bool03: Bool?
+  bool04: Bool?
+  bool11: Bool
+  bool12: Bool
+  bool13: Bool
+  bool14: Bool
+methods:
+  - methodName: queue01
+    perform: !UpdateBatch
+      batchSize: 250
+      execSql: |
+        update tbool
+        set bool01 = :bool01,
+            bool11 = :bool11
+        where bool02 = :bool02
+        and   bool03 = :bool03
+        and   bool12 = :bool12
+        and   bool13 = :bool13
+
+  - methodName: queue02
+    perform: !UpdateBatch
+      batchSize: 250
+      input:
+        delegate: yes
+      execSql: |
+        update tbool
+        set bool01 = :bool01,
+            bool11 = :bool11,
+            bool04 = :bool04,
+            bool14 = :bool14
+        where bool02 = :bool02
+        and   bool03 = :bool03
+        and   bool12 = :bool12
+        and   bool13 = :bool13
+
+  - methodName: queue03
+    perform: !UpdateBatch
+      execSql: |
+        update tbool
+        set bool04 = true
+        where bool14 is null
+
+  - methodName: queue04
+    perform: !UpdateBatch
+      timeout: 5
+      execSql: |
+        update tbool
+        set bool04 = true
+        where bool14 = :bool14
+
+  - methodName: queue05
+    perform: !UpdateBatch
+      execSql: |
+        update tbool
+        set bool04 = true
+        where bool14 = :bool14
+        and   bool03 = :bool03
+

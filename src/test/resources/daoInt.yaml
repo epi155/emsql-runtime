@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoInt
+declare:
+  idInt: long
+  int01: Int?
+  int02: Int?
+  int03: Int?
+  int04: Int?
+  int11: Int
+  int12: Int
+  int13: Int
+  int14: Int
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tint (
+          int01,
+          int11
+        ) values (
+          :int01,
+          :int11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        ) 
+        returning int13 into :int13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        ) 
+        returning int03 into :int03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        ) 
+        returning int13, int14 
+        into :int13, :int14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tint (
+          int01,
+          int02,
+          int11,
+          int12
+        ) values (
+          :int01,
+          :int02,
+          :int11,
+          :int12 
+        ) 
+        returning int03, int04 
+        into :int03, :int04
+
+  - methodName: findIntAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          int01,
+          int11
+        into
+          :int01,
+          :int11 
+        from tint
+        where id_Int = :idInt
+
+  - methodName: findIntAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          int01,
+          int11
+        into
+          :int01,
+          :int11 
+        from tint
+        where id_Int = :idInt
+
+  - methodName: findIntAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          int01
+        into
+          :int01
+        from tint
+        where int02 = :int02
+
+  - methodName: findIntAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          int11
+        into
+          :int11
+        from tint
+        where int12 = :int12
+
+  - methodName: findIntAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          int01,
+          int11
+        into
+          :int01,
+          :int11 
+        from tint
+        where id_Int = :idInt

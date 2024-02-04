@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoLocalDate
+declare:
+  idLocalDate: long
+  localDate01: LocalDate?
+  localDate02: LocalDate?
+  localDate03: LocalDate?
+  localDate04: LocalDate?
+  localDate11: LocalDate
+  localDate12: LocalDate
+  localDate13: LocalDate
+  localDate14: LocalDate
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate11
+        ) values (
+          :localDate01,
+          :localDate11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        ) 
+        returning localDate13 into :localDate13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        ) 
+        returning localDate03 into :localDate03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        ) 
+        returning localDate13, localDate14 
+        into :localDate13, :localDate14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tlocalDate (
+          localDate01,
+          localDate02,
+          localDate11,
+          localDate12
+        ) values (
+          :localDate01,
+          :localDate02,
+          :localDate11,
+          :localDate12 
+        ) 
+        returning localDate03, localDate04 
+        into :localDate03, :localDate04
+
+  - methodName: findLocalDateAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          localDate01,
+          localDate11
+        into
+          :localDate01,
+          :localDate11 
+        from tlocalDate
+        where id_LocalDate = :idLocalDate
+
+  - methodName: findLocalDateAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          localDate01,
+          localDate11
+        into
+          :localDate01,
+          :localDate11 
+        from tlocalDate
+        where id_LocalDate = :idLocalDate
+
+  - methodName: findLocalDateAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          localDate01
+        into
+          :localDate01
+        from tlocalDate
+        where localDate02 = :localDate02
+
+  - methodName: findLocalDateAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          localDate11
+        into
+          :localDate11
+        from tlocalDate
+        where localDate12 = :localDate12
+
+  - methodName: findLocalDateAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          localDate01,
+          localDate11
+        into
+          :localDate01,
+          :localDate11 
+        from tlocalDate
+        where id_LocalDate = :idLocalDate

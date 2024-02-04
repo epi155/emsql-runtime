@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoTimestamp
+declare:
+  idTimestamp: long
+  timestamp01: Timestamp?
+  timestamp02: Timestamp?
+  timestamp03: Timestamp?
+  timestamp04: Timestamp?
+  timestamp11: Timestamp
+  timestamp12: Timestamp
+  timestamp13: Timestamp
+  timestamp14: Timestamp
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp11
+        ) values (
+          :timestamp01,
+          :timestamp11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        ) 
+        returning timestamp13 into :timestamp13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        ) 
+        returning timestamp03 into :timestamp03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        ) 
+        returning timestamp13, timestamp14 
+        into :timestamp13, :timestamp14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into ttimestamp (
+          timestamp01,
+          timestamp02,
+          timestamp11,
+          timestamp12
+        ) values (
+          :timestamp01,
+          :timestamp02,
+          :timestamp11,
+          :timestamp12 
+        ) 
+        returning timestamp03, timestamp04 
+        into :timestamp03, :timestamp04
+
+  - methodName: findTimestampAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          timestamp01,
+          timestamp11
+        into
+          :timestamp01,
+          :timestamp11 
+        from ttimestamp
+        where id_Timestamp = :idTimestamp
+
+  - methodName: findTimestampAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          timestamp01,
+          timestamp11
+        into
+          :timestamp01,
+          :timestamp11 
+        from ttimestamp
+        where id_Timestamp = :idTimestamp
+
+  - methodName: findTimestampAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          timestamp01
+        into
+          :timestamp01
+        from ttimestamp
+        where timestamp02 = :timestamp02
+
+  - methodName: findTimestampAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          timestamp11
+        into
+          :timestamp11
+        from ttimestamp
+        where timestamp12 = :timestamp12
+
+  - methodName: findTimestampAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          timestamp01,
+          timestamp11
+        into
+          :timestamp01,
+          :timestamp11 
+        from ttimestamp
+        where id_Timestamp = :idTimestamp

@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoNumeric
+declare:
+  idNumeric: long
+  numeric01: Numeric?
+  numeric02: Numeric?
+  numeric03: Numeric?
+  numeric04: Numeric?
+  numeric11: Numeric
+  numeric12: Numeric
+  numeric13: Numeric
+  numeric14: Numeric
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric11
+        ) values (
+          :numeric01,
+          :numeric11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        ) 
+        returning numeric13 into :numeric13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        ) 
+        returning numeric03 into :numeric03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        ) 
+        returning numeric13, numeric14 
+        into :numeric13, :numeric14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tnumeric (
+          numeric01,
+          numeric02,
+          numeric11,
+          numeric12
+        ) values (
+          :numeric01,
+          :numeric02,
+          :numeric11,
+          :numeric12 
+        ) 
+        returning numeric03, numeric04 
+        into :numeric03, :numeric04
+
+  - methodName: findNumericAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          numeric01,
+          numeric11
+        into
+          :numeric01,
+          :numeric11 
+        from tnumeric
+        where id_Numeric = :idNumeric
+
+  - methodName: findNumericAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          numeric01,
+          numeric11
+        into
+          :numeric01,
+          :numeric11 
+        from tnumeric
+        where id_Numeric = :idNumeric
+
+  - methodName: findNumericAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          numeric01
+        into
+          :numeric01
+        from tnumeric
+        where numeric02 = :numeric02
+
+  - methodName: findNumericAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          numeric11
+        into
+          :numeric11
+        from tnumeric
+        where numeric12 = :numeric12
+
+  - methodName: findNumericAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          numeric01,
+          numeric11
+        into
+          :numeric01,
+          :numeric11 
+        from tnumeric
+        where id_Numeric = :idNumeric

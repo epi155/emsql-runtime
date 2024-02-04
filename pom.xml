@@ -27,6 +27,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.deploy.skip>false</maven.deploy.skip>
         <lombok-version>1.18.30</lombok-version>
+        <maven.test.skip>false</maven.test.skip>
+        <maven.emsql.add-compile-source-root>false</maven.emsql.add-compile-source-root>
+        <maven.emsql.add-test-compile-source-root>true</maven.emsql.add-test-compile-source-root>
     </properties>
 
     <dependencies>
@@ -154,6 +157,50 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>io.github.epi155</groupId>
+                <artifactId>emsql-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-test-sources</phase>
+                        <configuration>
+                            <java7>true</java7>
+                            <configDirectory>${project.basedir}/src/test/resources</configDirectory>
+                            <generateDirectory>${build.directory}/generated-test-sources/emsql</generateDirectory>
+                            <debugCode>true</debugCode>
+                            <modules>
+                                <module>daoBatch.yaml</module>
+                                <module>daoBool.yaml</module>
+                                <module>daoChar.yaml</module>
+                                <module>daoCursor.yaml</module>
+                                <module>daoDate.yaml</module>
+                                <module>daoDelete.yaml</module>
+                                <module>daoDouble.yaml</module>
+                                <module>daoFloat.yaml</module>
+                                <module>daoInsert.yaml</module>
+                                <module>daoInt.yaml</module>
+                                <module>daoLDate.yaml</module>
+                                <module>daoLong.yaml</module>
+                                <module>daoLTime.yaml</module>
+                                <module>daoLTmst.yaml</module>
+                                <module>daoNumb.yaml</module>
+                                <module>daoSelect.yaml</module>
+                                <module>daoShort.yaml</module>
+                                <module>daoTime.yaml</module>
+                                <module>daoTmst.yaml</module>
+                                <module>daoUpdate.yaml</module>
+                                <module>daoVChar.yaml</module>
+                            </modules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>

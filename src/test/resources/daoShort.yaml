@@ -1,0 +1,178 @@
+packageName: com.example.emsql
+className: DaoShort
+declare:
+  idShort: long
+  short01: Short?
+  short02: Short?
+  short03: Short?
+  short04: Short?
+  short11: Short
+  short12: Short
+  short13: Short
+  short14: Short
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tshort (
+          short01,
+          short11
+        ) values (
+          :short01,
+          :short11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        )
+  - methodName: insert02K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        ) 
+        returning short13 into :short13
+
+  - methodName: insert12K
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        ) 
+        returning short03 into :short03
+
+  - methodName: insert02K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        ) 
+        returning short13, short14 
+        into :short13, :short14
+
+  - methodName: insert12K2
+    perform: !InsertReturnInto
+      execSql: |
+        insert into tshort (
+          short01,
+          short02,
+          short11,
+          short12
+        ) values (
+          :short01,
+          :short02,
+          :short11,
+          :short12 
+        ) 
+        returning short03, short04 
+        into :short03, :short04
+
+  - methodName: findShortAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          short01,
+          short11
+        into
+          :short01,
+          :short11 
+        from tshort
+        where id_Short = :idShort
+
+  - methodName: findShortAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          short01,
+          short11
+        into
+          :short01,
+          :short11 
+        from tshort
+        where id_Short = :idShort
+
+  - methodName: findShortAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          short01
+        into
+          :short01
+        from tshort
+        where short02 = :short02
+
+  - methodName: findShortAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          short11
+        into
+          :short11
+        from tshort
+        where short12 = :short12
+
+  - methodName: findShortAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          short01,
+          short11
+        into
+          :short01,
+          :short11 
+        from tshort
+        where id_Short = :idShort

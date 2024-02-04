@@ -10,8 +10,25 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class ESQL {
-    private ESQL() {}
+public class EmSQL {
+    private EmSQL() {}
+
+    public static <T> EConsumer<T> getDummyConsumer() {
+        return new EConsumer<T>() {
+            @Override
+            public void accept(T o) {
+
+            }
+        };
+    }
+    public static <T> ESupplier<T> getDummySupplier() {
+        return new ESupplier<T>() {
+            @Override
+            public T get() {
+                return null;
+            }
+        };
+    }
 
     public static Boolean box(boolean v, boolean isNull) {
         return isNull ? null : v;
@@ -57,16 +74,16 @@ public class ESQL {
                 try {
                     method.invoke(currentObject, value);
                 } catch (IllegalArgumentException e) {
-                    throw new ESqlReflectException("IllegalArgument in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                    throw new SqlReflectException("IllegalArgument in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
                 } catch (IllegalAccessException e) {
-                    throw new ESqlReflectException("IllegalAccess in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                    throw new SqlReflectException("IllegalAccess in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
                 } catch (InvocationTargetException e) {
-                    throw new ESqlReflectException("InvocationTarget in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
+                    throw new SqlReflectException("InvocationTarget in " +currentObject.getClass() + "." + setterName + "("+ method.getParameterTypes()[0] + ")", e);
                 }
                 return;
             }
         }
-        throw new ESqlReflectException("No method " +currentObject.getClass() + "." + setterName + "("+value.getClass()+")");
+        throw new SqlReflectException("No method " +currentObject.getClass() + "." + setterName + "("+value.getClass()+")");
     }
     public static <T> T get(Object target, String path, Class<T> claz) {
         String[] pieces = path.split("[.]");
@@ -90,7 +107,7 @@ public class ESQL {
                 if (currentObject==null)    // IS_GET
                     break;
             } catch (NoSuchMethodException e) {
-                throw new ESqlReflectException("No method " +currentObject.getClass() + "." + getterName + "()", e);
+                throw new SqlReflectException("No method " +currentObject.getClass() + "." + getterName + "()", e);
             }
         }
         return currentObject;
@@ -107,9 +124,9 @@ public class ESQL {
             }
             return result;
         } catch (IllegalAccessException e) {
-            throw new ESqlReflectException("IllegalAccess in " +object.getClass() + "." + getter.getName() + "()", e);
+            throw new SqlReflectException("IllegalAccess in " +object.getClass() + "." + getter.getName() + "()", e);
         } catch (InvocationTargetException e) {
-            throw new ESqlReflectException("InvocationTarget in " +object.getClass() + "." + getter.getName() + "()", e);
+            throw new SqlReflectException("InvocationTarget in " +object.getClass() + "." + getter.getName() + "()", e);
         }
     }
 
@@ -119,11 +136,11 @@ public class ESQL {
             setter.setAccessible(true);
             setter.invoke(object, result);
         } catch (NoSuchMethodException e) {
-            throw new ESqlReflectException("No setter - "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+            throw new SqlReflectException("No setter - "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
         } catch (InvocationTargetException e) {
-            throw new ESqlReflectException("Invocation "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+            throw new SqlReflectException("Invocation "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
         } catch (IllegalAccessException e) {
-            throw new ESqlReflectException("Access "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
+            throw new SqlReflectException("Access "+object.getClass().getName() + "." + setterName + "(" + type.getName() + ")", e);
         }
     }
 
@@ -132,13 +149,13 @@ public class ESQL {
             Constructor<?> ctor = type.getConstructor();
             return  ctor.newInstance();
         } catch (NoSuchMethodException e) {
-            throw new ESqlReflectException("No Constructor for "+type.getName(), e);
+            throw new SqlReflectException("No Constructor for "+type.getName(), e);
         } catch (InvocationTargetException e) {
-            throw new ESqlReflectException("Invocation Constructor for "+type.getName(), e);
+            throw new SqlReflectException("Invocation Constructor for "+type.getName(), e);
         } catch (InstantiationException e) {
-            throw new ESqlReflectException("Instantiation Constructor for "+type.getName(), e);
+            throw new SqlReflectException("Instantiation Constructor for "+type.getName(), e);
         } catch (IllegalAccessException e) {
-            throw new ESqlReflectException("Access Constructor for "+type.getName(), e);
+            throw new SqlReflectException("Access Constructor for "+type.getName(), e);
         }
     }
 
