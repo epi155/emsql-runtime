@@ -34,7 +34,7 @@ methods:
         delegate: no
       output:
         fields:
-          idBool: long
+          - idBool
       execSql: |
         insert into tbool (
           bool01,
@@ -55,8 +55,8 @@ methods:
         delegate: no
       output:
         fields:
-          idBool: long
-          bool14: bool
+          - idBool
+          - bool14
       execSql: |
         insert into tbool (
           bool01,
