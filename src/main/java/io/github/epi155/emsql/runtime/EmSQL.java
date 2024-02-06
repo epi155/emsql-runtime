@@ -3,12 +3,6 @@ package io.github.epi155.emsql.runtime;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class EmSQL {
     private EmSQL() {}
@@ -48,15 +42,6 @@ public class EmSQL {
     public static Float box(float v, boolean isNull) {
         return isNull ? null : v;
     }
-    public static LocalDate toLocalDate(Date d) {
-        return d==null ? null : d.toLocalDate();
-    }
-    public static LocalDateTime toLocalDateTime(Timestamp d) {
-        return d==null ? null : d.toLocalDateTime();
-    }
-    public static LocalTime toLocalTime(Time d) {
-        return d==null ? null : d.toLocalTime();
-    }
 
     private static final int IS_SET = 1;
     private static final int IS_GET = 0;
@@ -88,7 +73,6 @@ public class EmSQL {
     public static <T> T get(Object target, String path, Class<T> claz) {
         String[] pieces = path.split("[.]");
         boolean is = (claz == boolean.class);
-//        return claz.cast(passesThrough(target, pieces, IS_GET, is));
         //noinspection unchecked
         return (T) passesThrough(target, pieces, IS_GET, is);
     }
