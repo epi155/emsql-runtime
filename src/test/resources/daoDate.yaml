@@ -52,8 +52,9 @@ methods:
           :date12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdate (
           date01,
           date02,
@@ -65,11 +66,13 @@ methods:
           :date11,
           :date12 
         ) 
-        returning date13 into :date13
+        returning date13 into :date13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdate (
           date01,
           date02,
@@ -81,11 +84,13 @@ methods:
           :date11,
           :date12 
         ) 
-        returning date03 into :date03
+        returning date03 into :date03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdate (
           date01,
           date02,
@@ -98,11 +103,13 @@ methods:
           :date12 
         ) 
         returning date13, date14 
-        into :date13, :date14
+        into :date13, :date14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdate (
           date01,
           date02,
@@ -115,7 +122,8 @@ methods:
           :date12 
         ) 
         returning date03, date04 
-        into :date03, :date04
+        into :date03, :date04;
+        end;
 
   - methodName: findDateAny
     perform: !SelectOptional

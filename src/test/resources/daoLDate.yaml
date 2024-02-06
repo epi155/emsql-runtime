@@ -52,8 +52,9 @@ methods:
           :localDate12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDate (
           localDate01,
           localDate02,
@@ -65,11 +66,13 @@ methods:
           :localDate11,
           :localDate12 
         ) 
-        returning localDate13 into :localDate13
+        returning localDate13 into :localDate13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDate (
           localDate01,
           localDate02,
@@ -81,11 +84,13 @@ methods:
           :localDate11,
           :localDate12 
         ) 
-        returning localDate03 into :localDate03
+        returning localDate03 into :localDate03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDate (
           localDate01,
           localDate02,
@@ -98,11 +103,13 @@ methods:
           :localDate12 
         ) 
         returning localDate13, localDate14 
-        into :localDate13, :localDate14
+        into :localDate13, :localDate14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDate (
           localDate01,
           localDate02,
@@ -115,7 +122,8 @@ methods:
           :localDate12 
         ) 
         returning localDate03, localDate04 
-        into :localDate03, :localDate04
+        into :localDate03, :localDate04;
+        end;
 
   - methodName: findLocalDateAny
     perform: !SelectOptional

@@ -52,8 +52,9 @@ methods:
           :short12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tshort (
           short01,
           short02,
@@ -65,11 +66,13 @@ methods:
           :short11,
           :short12 
         ) 
-        returning short13 into :short13
+        returning short13 into :short13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tshort (
           short01,
           short02,
@@ -81,11 +84,13 @@ methods:
           :short11,
           :short12 
         ) 
-        returning short03 into :short03
+        returning short03 into :short03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tshort (
           short01,
           short02,
@@ -98,11 +103,13 @@ methods:
           :short12 
         ) 
         returning short13, short14 
-        into :short13, :short14
+        into :short13, :short14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tshort (
           short01,
           short02,
@@ -115,7 +122,8 @@ methods:
           :short12 
         ) 
         returning short03, short04 
-        into :short03, :short04
+        into :short03, :short04;
+        end;
 
   - methodName: findShortAny
     perform: !SelectOptional

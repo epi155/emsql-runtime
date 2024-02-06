@@ -52,8 +52,9 @@ methods:
           :numeric12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tnumeric (
           numeric01,
           numeric02,
@@ -65,11 +66,13 @@ methods:
           :numeric11,
           :numeric12 
         ) 
-        returning numeric13 into :numeric13
+        returning numeric13 into :numeric13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tnumeric (
           numeric01,
           numeric02,
@@ -81,11 +84,13 @@ methods:
           :numeric11,
           :numeric12 
         ) 
-        returning numeric03 into :numeric03
+        returning numeric03 into :numeric03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tnumeric (
           numeric01,
           numeric02,
@@ -98,11 +103,13 @@ methods:
           :numeric12 
         ) 
         returning numeric13, numeric14 
-        into :numeric13, :numeric14
+        into :numeric13, :numeric14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tnumeric (
           numeric01,
           numeric02,
@@ -115,7 +122,8 @@ methods:
           :numeric12 
         ) 
         returning numeric03, numeric04 
-        into :numeric03, :numeric04
+        into :numeric03, :numeric04;
+        end;
 
   - methodName: findNumericAny
     perform: !SelectOptional

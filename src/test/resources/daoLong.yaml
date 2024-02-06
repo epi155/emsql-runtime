@@ -52,8 +52,9 @@ methods:
           :long12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlong (
           long01,
           long02,
@@ -65,11 +66,13 @@ methods:
           :long11,
           :long12 
         ) 
-        returning long13 into :long13
+        returning long13 into :long13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlong (
           long01,
           long02,
@@ -81,11 +84,13 @@ methods:
           :long11,
           :long12 
         ) 
-        returning long03 into :long03
+        returning long03 into :long03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlong (
           long01,
           long02,
@@ -98,11 +103,13 @@ methods:
           :long12 
         ) 
         returning long13, long14 
-        into :long13, :long14
+        into :long13, :long14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlong (
           long01,
           long02,
@@ -115,7 +122,8 @@ methods:
           :long12 
         ) 
         returning long03, long04 
-        into :long03, :long04
+        into :long03, :long04;
+        end;
 
   - methodName: findLongAny
     perform: !SelectOptional

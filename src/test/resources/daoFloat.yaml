@@ -53,8 +53,9 @@ methods:
           :float12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tfloat (
           float01,
           float02,
@@ -66,11 +67,13 @@ methods:
           :float11,
           :float12 
         ) 
-        returning float13 into :float13
+        returning float13 into :float13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tfloat (
           float01,
           float02,
@@ -82,12 +85,14 @@ methods:
           :float11,
           :float12 
         ) 
-        returning float03 into :float03
+        returning float03 into :float03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       timeout: 5
       execSql: |
+        begin
         insert into tfloat (
           float01,
           float02,
@@ -100,11 +105,13 @@ methods:
           :float12 
         ) 
         returning float13, float14 
-        into :float13, :float14
+        into :float13, :float14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tfloat (
           float01,
           float02,
@@ -117,7 +124,8 @@ methods:
           :float12 
         ) 
         returning float03, float04 
-        into :float03, :float04
+        into :float03, :float04;
+        end;
 
   - methodName: findFloatAny
     perform: !SelectOptional

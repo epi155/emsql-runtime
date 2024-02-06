@@ -53,8 +53,9 @@ methods:
           :bool12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tbool (
           bool01,
           bool02,
@@ -66,11 +67,13 @@ methods:
           :bool11,
           :bool12 
         ) 
-        returning bool13 into :bool13
+        returning bool13 into :bool13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tbool (
           bool01,
           bool02,
@@ -82,12 +85,14 @@ methods:
           :bool11,
           :bool12 
         ) 
-        returning bool03 into :bool03
+        returning bool03 into :bool03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       timeout: 5
       execSql: |
+        begin
         insert into tbool (
           bool01,
           bool02,
@@ -100,11 +105,13 @@ methods:
           :bool12 
         ) 
         returning bool13, bool14 
-        into :bool13, :bool14
+        into :bool13, :bool14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tbool (
           bool01,
           bool02,
@@ -117,7 +124,8 @@ methods:
           :bool12 
         ) 
         returning bool03, bool04 
-        into :bool03, :bool04
+        into :bool03, :bool04;
+        end;
 
   - methodName: findBoolAny
     perform: !SelectOptional

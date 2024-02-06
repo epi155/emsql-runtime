@@ -52,8 +52,9 @@ methods:
           :timestamp12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttimestamp (
           timestamp01,
           timestamp02,
@@ -65,11 +66,13 @@ methods:
           :timestamp11,
           :timestamp12 
         ) 
-        returning timestamp13 into :timestamp13
+        returning timestamp13 into :timestamp13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttimestamp (
           timestamp01,
           timestamp02,
@@ -81,11 +84,13 @@ methods:
           :timestamp11,
           :timestamp12 
         ) 
-        returning timestamp03 into :timestamp03
+        returning timestamp03 into :timestamp03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttimestamp (
           timestamp01,
           timestamp02,
@@ -98,11 +103,13 @@ methods:
           :timestamp12 
         ) 
         returning timestamp13, timestamp14 
-        into :timestamp13, :timestamp14
+        into :timestamp13, :timestamp14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttimestamp (
           timestamp01,
           timestamp02,
@@ -115,7 +122,8 @@ methods:
           :timestamp12 
         ) 
         returning timestamp03, timestamp04 
-        into :timestamp03, :timestamp04
+        into :timestamp03, :timestamp04;
+        end;
 
   - methodName: findTimestampAny
     perform: !SelectOptional

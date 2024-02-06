@@ -52,8 +52,9 @@ methods:
           :char12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tchar (
           char01,
           char02,
@@ -65,11 +66,13 @@ methods:
           :char11,
           :char12 
         ) 
-        returning char13 into :char13
+        returning char13 into :char13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tchar (
           char01,
           char02,
@@ -81,11 +84,13 @@ methods:
           :char11,
           :char12 
         ) 
-        returning char03 into :char03
+        returning char03 into :char03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tchar (
           char01,
           char02,
@@ -98,11 +103,13 @@ methods:
           :char12 
         ) 
         returning char13, char14 
-        into :char13, :char14
+        into :char13, :char14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tchar (
           char01,
           char02,
@@ -115,7 +122,8 @@ methods:
           :char12 
         ) 
         returning char03, char04 
-        into :char03, :char04
+        into :char03, :char04;
+        end;
 
   - methodName: findCharAny
     perform: !SelectOptional

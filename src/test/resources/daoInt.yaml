@@ -52,8 +52,9 @@ methods:
           :int12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tint (
           int01,
           int02,
@@ -65,11 +66,13 @@ methods:
           :int11,
           :int12 
         ) 
-        returning int13 into :int13
+        returning int13 into :int13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tint (
           int01,
           int02,
@@ -81,11 +84,13 @@ methods:
           :int11,
           :int12 
         ) 
-        returning int03 into :int03
+        returning int03 into :int03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tint (
           int01,
           int02,
@@ -98,11 +103,13 @@ methods:
           :int12 
         ) 
         returning int13, int14 
-        into :int13, :int14
+        into :int13, :int14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tint (
           int01,
           int02,
@@ -115,7 +122,8 @@ methods:
           :int12 
         ) 
         returning int03, int04 
-        into :int03, :int04
+        into :int03, :int04;
+        end;
 
   - methodName: findIntAny
     perform: !SelectOptional

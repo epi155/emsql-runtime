@@ -101,12 +101,13 @@ methods:
         ) 
 
   - methodName: insert05
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       input:
         delegate: no
       output:
         delegate: no
       execSql: |
+        begin
         insert into tbool (
           bool01,
           bool02,
@@ -118,4 +119,5 @@ methods:
           :bool11,
           :bool12
         )
-        returning idBool into :idBool
+        returning idBool into :idBool;
+        end;

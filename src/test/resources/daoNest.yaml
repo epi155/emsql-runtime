@@ -1,0 +1,90 @@
+packageName: com.example.emsql
+className: DaoP01
+declare:
+  idPraticaApp: bigint
+  idPraticaCdm: int?
+  abi: int?
+  ibrKey: bigint?
+  idFile: int?
+  cdPosizione: varchar
+  tpPosizione: varchar
+  stato: varchar
+  errCount: int
+  label: varchar
+  categoria: varchar
+  idPraticaCdmOrig: int?
+  tsVers: localdatetime
+  p01.abi: int?
+  p01.ibrKey: long?
+  p01.idFile: int?
+  p01.cdPosizione: varchar
+  p01.tpPosizione: varchar
+  p01.stato: varchar
+  p01.errCount: int
+  p01.label: char
+  p01.categoria: char?
+  p01.idPraticaCdmOrig: long?
+  p02.ibrPrg: int
+  p01.idPraticaApp: long
+  p02.idFunzioneApp: long
+methods:
+  - methodName: salvaPraticaDeep
+    perform: !InlineProcedure
+      input:
+        reflect: no
+      output:
+        fields:
+          - p01.idPraticaApp
+          - p02.idFunzioneApp
+      execSql: |
+        delclare 
+          id01 number
+          id02 number
+        begin
+          select P01Q_PRATICA.nextval into id01 from dual;
+          select P02Q_FUNZIONE.nextval into id02 from dual;
+          insert into P01_PRATICA (
+            id_pratica_app,
+            id_pratica_cdm,
+            abi,
+            ibr_key,
+            id_file,
+            cd_posizione,
+            tp_posizione,
+            stato_pratica,
+            err_count,
+            label_pratica,
+            categoria,
+            id_pratica_cdm_orig,
+            tipo,
+            ts_vers
+          ) values (
+            id01,
+            :idPraticaCdm,
+            :p01.abi,
+            :p01.ibrKey,
+            :p01.idFile,
+            :p01.cdPosizione,
+            :p01.tpPosizione,
+            :p01.stato,
+            :p01.errCount,
+            :p01.label,
+            :p01.categoria,
+            :p01.idPraticaCdmOrig,
+            'Z',
+            current_timestamp
+          );
+          insert into P02_FUNZIONE {
+            id_funzione_app,
+            id_pratica_app,
+            ibr_prg
+            ts_vers
+          ) values (
+            id02,
+            id01,
+            :p02.ibrPrg
+            current_timestamp
+          );
+          set :p01.idPraticaApp = id01;
+          set :p02.idFunzioneApp = id02;
+        end;

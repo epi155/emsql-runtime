@@ -52,8 +52,9 @@ methods:
           :localDateTime12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDateTime (
           localDateTime01,
           localDateTime02,
@@ -65,11 +66,13 @@ methods:
           :localDateTime11,
           :localDateTime12 
         ) 
-        returning localDateTime13 into :localDateTime13
+        returning localDateTime13 into :localDateTime13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDateTime (
           localDateTime01,
           localDateTime02,
@@ -81,11 +84,13 @@ methods:
           :localDateTime11,
           :localDateTime12 
         ) 
-        returning localDateTime03 into :localDateTime03
+        returning localDateTime03 into :localDateTime03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDateTime (
           localDateTime01,
           localDateTime02,
@@ -98,11 +103,13 @@ methods:
           :localDateTime12 
         ) 
         returning localDateTime13, localDateTime14 
-        into :localDateTime13, :localDateTime14
+        into :localDateTime13, :localDateTime14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tlocalDateTime (
           localDateTime01,
           localDateTime02,
@@ -115,7 +122,8 @@ methods:
           :localDateTime12 
         ) 
         returning localDateTime03, localDateTime04 
-        into :localDateTime03, :localDateTime04
+        into :localDateTime03, :localDateTime04;
+        end;
 
   - methodName: findLocalDateTimeAny
     perform: !SelectOptional

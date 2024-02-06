@@ -53,8 +53,9 @@ methods:
           :time12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttime (
           time01,
           time02,
@@ -66,11 +67,13 @@ methods:
           :time11,
           :time12 
         ) 
-        returning time13 into :time13
+        returning time13 into :time13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttime (
           time01,
           time02,
@@ -82,12 +85,14 @@ methods:
           :time11,
           :time12 
         ) 
-        returning time03 into :time03
+        returning time03 into :time03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       timeout: 5
       execSql: |
+        begin
         insert into ttime (
           time01,
           time02,
@@ -100,11 +105,13 @@ methods:
           :time12 
         ) 
         returning time13, time14 
-        into :time13, :time14
+        into :time13, :time14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into ttime (
           time01,
           time02,
@@ -117,7 +124,8 @@ methods:
           :time12 
         ) 
         returning time03, time04 
-        into :time03, :time04
+        into :time03, :time04;
+        end;
 
   - methodName: findTimeAny
     perform: !SelectOptional

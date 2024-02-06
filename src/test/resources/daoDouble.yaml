@@ -53,8 +53,9 @@ methods:
           :double12 
         )
   - methodName: insert02K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdouble (
           double01,
           double02,
@@ -66,11 +67,13 @@ methods:
           :double11,
           :double12 
         ) 
-        returning double13 into :double13
+        returning double13 into :double13;
+        end;
 
   - methodName: insert12K
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdouble (
           double01,
           double02,
@@ -82,12 +85,14 @@ methods:
           :double11,
           :double12 
         ) 
-        returning double03 into :double03
+        returning double03 into :double03;
+        end;
 
   - methodName: insert02K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       timeout: 5
       execSql: |
+        begin
         insert into tdouble (
           double01,
           double02,
@@ -100,11 +105,13 @@ methods:
           :double12 
         ) 
         returning double13, double14 
-        into :double13, :double14
+        into :double13, :double14;
+        end;
 
   - methodName: insert12K2
-    perform: !InsertReturnInto
+    perform: !InlineProcedure
       execSql: |
+        begin
         insert into tdouble (
           double01,
           double02,
@@ -117,7 +124,8 @@ methods:
           :double12 
         ) 
         returning double03, double04 
-        into :double03, :double04
+        into :double03, :double04;
+        end;
 
   - methodName: findDoubleAny
     perform: !SelectOptional
