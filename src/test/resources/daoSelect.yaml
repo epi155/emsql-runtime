@@ -34,6 +34,7 @@ methods:
   - methodName: select11
     perform: !SelectSingle
       timeout: 5
+      tune: yes
       input:
         delegate: no
       output:

@@ -3,7 +3,7 @@ package io.github.epi155.emsql.runtime;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SqlStmtSetImpl implements SqlStatementSetter {
+public class SqlStmtSetImpl implements SqlStmtSetter {
     private final Statement statement;
 
     public SqlStmtSetImpl(Statement statement) {
