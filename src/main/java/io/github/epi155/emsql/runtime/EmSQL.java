@@ -3,9 +3,56 @@ package io.github.epi155.emsql.runtime;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.sql.*;
 
 public class EmSQL {
     private EmSQL() {}
+
+    public static class Mul {
+        private final int nth;
+        private final int rows;
+        private final int cols;
+
+        public Mul(int nth, int rows, int cols) {
+            this.nth = nth;
+            this.rows = rows;
+            this.cols = cols;
+        }
+
+        public String replace(String query) {
+            String placeholder = "[#" + nth + "]";
+            int ks = query.indexOf(placeholder);
+            if (ks<0)
+                return query;   // dead branch
+            StringBuilder sb = new StringBuilder();
+            sb.append(query, 0, ks);
+            if (cols==1) {
+                for(int kr = 1; kr<= rows; kr++) {
+                    sb.append('?');
+                    if (kr< rows)sb.append(',');
+                }
+            } else {
+                for(int kr = 1; kr<= rows; kr++) {
+                    sb.append('(');
+                    for(int kc=1; kc<=cols; kc++) {
+                        sb.append('?');
+                        if (kc< cols)sb.append(',');
+                    }
+                    sb.append(')');
+                    if (kr< rows)sb.append(',');
+                }
+            }
+            sb.append(query.substring(ks+placeholder.length()));
+            return sb.toString();
+        }
+    }
+    public static String expandQueryParameters(String query, Mul...muls) {
+        for(Mul mul: muls) {
+            query = mul.replace(query);
+        }
+        return query;
+    }
 
     public static <T> EConsumer<T> getDummyConsumer() {
         return new EConsumer<T>() {
@@ -22,25 +69,6 @@ public class EmSQL {
                 return null;
             }
         };
-    }
-
-    public static Boolean box(boolean v, boolean isNull) {
-        return isNull ? null : v;
-    }
-    public static Short box(short v, boolean isNull) {
-        return isNull ? null : v;
-    }
-    public static Integer box(int v, boolean isNull) {
-        return isNull ? null : v;
-    }
-    public static Long box(long v, boolean isNull) {
-        return isNull ? null : v;
-    }
-    public static Double box(double v, boolean isNull) {
-        return isNull ? null : v;
-    }
-    public static Float box(float v, boolean isNull) {
-        return isNull ? null : v;
     }
 
     private static final int IS_SET = 1;
@@ -169,4 +197,142 @@ public class EmSQL {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
+    //_____________________________________________________________
+    //
+    public static Boolean getBoolean(ResultSet rs, int i) throws SQLException {
+        boolean it=rs.getBoolean(i);
+        return rs.wasNull() ? null : it;
+    }
+    public static Short getShort(ResultSet rs, int i) throws SQLException {
+        short it=rs.getShort(i);
+        return rs.wasNull() ? null : it;
+    }
+    public static Integer getInt(ResultSet rs, int i) throws SQLException {
+        int it=rs.getInt(i);
+        return rs.wasNull() ? null : it;
+    }
+    public static Long getLong(ResultSet rs, int i) throws SQLException {
+        long it=rs.getLong(i);
+        return rs.wasNull() ? null : it;
+    }
+    public static Double getDouble(ResultSet rs, int i) throws SQLException {
+        double it=rs.getDouble(i);
+        return rs.wasNull() ? null : it;
+    }
+    public static Float getFloat(ResultSet rs, int i) throws SQLException {
+        float it=rs.getFloat(i);
+        return rs.wasNull() ? null : it;
+    }
+    //_____________________________________________________________
+    //
+    public static void setBoolean(PreparedStatement ps, int i, Boolean it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.BOOLEAN);
+        } else {
+            ps.setBoolean(i, it);
+        }
+    }
+    public static void setShort(PreparedStatement ps, int i, Short it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.SMALLINT);
+        } else {
+            ps.setShort(i, it);
+        }
+    }
+    public static void setInt(PreparedStatement ps, int i, Integer it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.INTEGER);
+        } else {
+            ps.setInt(i, it);
+        }
+    }
+    public static void setLong(PreparedStatement ps, int i, Long it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.BIGINT);
+        } else {
+            ps.setLong(i, it);
+        }
+    }
+    public static void setDouble(PreparedStatement ps, int i, Double it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.DOUBLE);
+        } else {
+            ps.setDouble(i, it);
+        }
+    }
+    public static void setFloat(PreparedStatement ps, int i, Float it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.FLOAT);
+        } else {
+            ps.setFloat(i, it);
+        }
+    }
+    public static void setChar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.CHAR);
+        } else {
+            ps.setString(i, it);
+        }
+    }
+    public static void setVarchar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.VARCHAR);
+        } else {
+            ps.setString(i, it);
+        }
+    }
+    public static void setDate(PreparedStatement ps, int i, Date it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.DATE);
+        } else {
+            ps.setDate(i, it);
+        }
+    }
+    public static void setTimestamp(PreparedStatement ps, int i, Timestamp it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TIMESTAMP);
+        } else {
+            ps.setTimestamp(i, it);
+        }
+    }
+    public static void setTime(PreparedStatement ps, int i, Time it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TIME);
+        } else {
+            ps.setTime(i, it);
+        }
+    }
+    public static void setBigDecimal(PreparedStatement ps, int i, BigDecimal it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NUMERIC);
+        } else {
+            ps.setBigDecimal(i, it);
+        }
+    }
+    //_____________________________________________________________
+    //
+    public static Boolean getBoolean(CallableStatement cs, int i) throws SQLException {
+        boolean it=cs.getBoolean(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Short getShort(CallableStatement cs, int i) throws SQLException {
+        short it=cs.getShort(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Integer getInt(CallableStatement cs, int i) throws SQLException {
+        int it=cs.getInt(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Long getLong(CallableStatement cs, int i) throws SQLException {
+        long it=cs.getLong(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Double getDouble(CallableStatement cs, int i) throws SQLException {
+        double it=cs.getDouble(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Float getFloat(CallableStatement cs, int i) throws SQLException {
+        float it=cs.getFloat(i);
+        return cs.wasNull() ? null : it;
+    }
 }
