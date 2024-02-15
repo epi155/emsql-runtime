@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>io.github.epi155</groupId>
                 <artifactId>emsql-maven-plugin</artifactId>
-                <version>0.1-A2-SNAPSHOT</version>
+                <version>0.1-A2</version>
                 <executions>
                     <execution>
                         <id>test</id>
@@ -202,6 +202,18 @@
                                 <module>daoUpdate.yaml</module>
                                 <module>daoVChar.yaml</module>
                                 <module>daoProc.yaml</module>
+                                <module>daoList.yaml</module>
+                                <module>daoList0.yaml</module>
+                                <module>daoList2.yaml</module>
+                                <module>ooSelect.yaml</module>
+                                <module>odSelect.yaml</module>
+                                <module>orSelect.yaml</module>
+                                <module>doSelect.yaml</module>
+                                <module>ddSelect.yaml</module>
+                                <module>drSelect.yaml</module>
+                                <module>roSelect.yaml</module>
+                                <module>rdSelect.yaml</module>
+                                <module>rrSelect.yaml</module>
                             </modules>
                         </configuration>
                     </execution>

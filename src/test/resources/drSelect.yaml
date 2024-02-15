@@ -1,0 +1,303 @@
+packageName: com.example.emsql
+className: DrSelect
+declare:
+  idCertificate: long
+  commonName: varchar
+  locality: varchar
+  organization: varchar
+  organizationUnit: varchar
+  organizationsUnit: ( organizationUnit )
+  organizations: ( organization, organizationUnit )
+  state: char
+  tsMin: timestamp
+  tsMax: timestamp
+methods:
+  - methodName: select01
+    perform: !SelectSingle
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where id_certificate = :idCertificate 
+
+  - methodName: select02
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit = :organizationUnit
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select03
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and organization_unit = :organizationUnit
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select04
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit = :organizationUnit
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select05
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit = :organizationUnit
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select06
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and organization_unit = :organizationUnit
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select12
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit in ( :organizationsUnit )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select13
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and organization_unit in ( :organizationsUnit )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select14
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit in ( :organizationsUnit )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select15
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and organization_unit in ( :organizationsUnit )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select16
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and organization_unit in ( :organizationsUnit )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select22
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and ( organization, organization_unit ) in ( :organizations )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select23
+    perform: !CursorForSelect
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and ( organization, organization_unit ) in ( :organizations )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select24
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and ( organization, organization_unit ) in ( :organizations )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select25
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name
+        into
+          :commonName
+        from certificate
+        where locality = :locality
+        and ( organization, organization_unit ) in ( :organizations )
+        and not_before >= :tsMin
+        and not_after <= :tsMax
+
+  - methodName: select26
+    perform: !CursorForSelect
+      mode: FP
+      input:
+        delegate: yes
+      output:
+        reflect: yes
+      execSql: |
+        select
+          common_name,
+          organization
+        into
+          :commonName,
+          :organization
+        from certificate
+        where locality = :locality
+        and ( organization, organization_unit ) in ( :organizations )
+        and not_before >= :tsMin
+        and not_after <= :tsMax

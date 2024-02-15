@@ -1,0 +1,31 @@
+packageName: com.example.emsql
+className: DaoCertificate
+declare:
+  commonName: varchar
+  organizationalUnit: varchar
+  organization: varchar
+  locality: varchar
+  state: varchar
+  country: char
+  localities: ( locality )
+  locOrgs: ( locality, organization )
+methods:
+  - methodName: certificateList
+    perform: !SelectList
+      execSql: |
+        select
+          common_name, organizational_unit, organization, locality, state, country
+        into
+          :commonName, :organizationalUnit, :organization, :locality, :state, :country
+        from certificate
+        where locality in ( :localities )
+
+  - methodName: certificateListStrict
+    perform: !SelectList
+      execSql: |
+        select
+          common_name, organizational_unit, organization, locality, state, country
+        into
+          :commonName, :organizationalUnit, :organization, :locality, :state, :country
+        from certificate
+        where (locality, organization) in ( :locOrgs )
