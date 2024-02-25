@@ -1,16 +1,21 @@
 package io.github.epi155.emsql.runtime;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+@Slf4j
 abstract class  BatchAction implements AutoCloseable {
     protected final PreparedStatement ps;
     private final int batchSize;
     @Setter
     private EConsumer<int[]> trigger;
     private int pending = 0;
+    private final Lock lock = new ReentrantLock();
 
     protected BatchAction(PreparedStatement ps, int batchSize) {
         this.ps = ps;
@@ -18,20 +23,34 @@ abstract class  BatchAction implements AutoCloseable {
     }
 
     protected void addBatch() throws SQLException {
-        ps.addBatch();
-        if (++pending > batchSize)
+        lock.lock();
+        try {
+            ps.addBatch();
+            pending++;
+        } finally {
+            lock.unlock();
+        }
+        log.debug("Queued {}/{}", pending, batchSize);
+        if (pending >= batchSize)
             flush();
-
     }
 
     public void flush() throws SQLException {
         if (pending > 0) {
-            int[] n = ps.executeBatch();
+            log.debug("Executing batch {} ...", pending);
+            int[] n;
+            lock.lock();    // stop queuing
+            try {
+                n = ps.executeBatch();
+                pending = 0;
+            } finally {
+                lock.unlock();
+            }
+            log.debug("Executed batch {}.", n.length);
             if (trigger != null) {
                 trigger.accept(n);
             }
         }
-        pending = 0;
     }
 
     public void close() throws SQLException {
