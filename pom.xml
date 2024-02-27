@@ -59,7 +59,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.14</version>
+            <version>1.5.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>io.github.epi155</groupId>
                 <artifactId>emsql-maven-plugin</artifactId>
-                <version>0.1-A3-SNAPSHOT</version>
+                <version>0.1-A3</version>
                 <executions>
                     <execution>
                         <id>test</id>
