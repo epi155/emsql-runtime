@@ -1,0 +1,188 @@
+packageName: com.example.emsql
+className: DaoByte
+declare:
+  idByte: long
+  byte01: Byte?
+  byte02: Byte?
+  byte03: Byte?
+  byte04: Byte?
+  byte11: Byte
+  byte12: Byte
+  byte13: Byte
+  byte14: Byte
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tbyte (
+          byte01,
+          byte11
+        ) values (
+          :byte01,
+          :byte11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        ) 
+        returning byte13 into :byte13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        ) 
+        returning byte03 into :byte03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        ) 
+        returning byte13, byte14 
+        into :byte13, :byte14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbyte (
+          byte01,
+          byte02,
+          byte11,
+          byte12
+        ) values (
+          :byte01,
+          :byte02,
+          :byte11,
+          :byte12 
+        ) 
+        returning byte03, byte04 
+        into :byte03, :byte04;
+        end;
+
+  - methodName: findByteAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          byte01,
+          byte11
+        into
+          :byte01,
+          :byte11 
+        from tbyte
+        where id_Byte = :idByte
+
+  - methodName: findByteAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          byte01,
+          byte11
+        into
+          :byte01,
+          :byte11 
+        from tbyte
+        where id_Byte = :idByte
+
+  - methodName: findByteAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          byte01
+        into
+          :byte01
+        from tbyte
+        where byte02 = :byte02
+
+  - methodName: findByteAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          byte11
+        into
+          :byte11
+        from tbyte
+        where byte12 = :byte12
+
+  - methodName: findByteAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          byte01,
+          byte11
+        into
+          :byte01,
+          :byte11 
+        from tbyte
+        where id_Byte = :idByte

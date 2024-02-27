@@ -182,6 +182,8 @@
                             <modules>
                                 <module>daoBatch.yaml</module>
                                 <module>daoBool.yaml</module>
+                                <module>daoNBool.yaml</module>
+                                <module>daoByte.yaml</module>
                                 <module>daoChar.yaml</module>
                                 <module>daoCursor.yaml</module>
                                 <module>daoDate.yaml</module>

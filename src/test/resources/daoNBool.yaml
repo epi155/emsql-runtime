@@ -1,0 +1,188 @@
+packageName: com.example.emsql
+className: DaoNumBool
+declare:
+  idNumBool: long
+  numBool01: NumBool?
+  numBool02: NumBool?
+  numBool03: NumBool?
+  numBool04: NumBool?
+  numBool11: NumBool
+  numBool12: NumBool
+  numBool13: NumBool
+  numBool14: NumBool
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tnumBool (
+          numBool01,
+          numBool11
+        ) values (
+          :numBool01,
+          :numBool11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        ) 
+        returning numBool13 into :numBool13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        ) 
+        returning numBool03 into :numBool03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        ) 
+        returning numBool13, numBool14 
+        into :numBool13, :numBool14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tnumBool (
+          numBool01,
+          numBool02,
+          numBool11,
+          numBool12
+        ) values (
+          :numBool01,
+          :numBool02,
+          :numBool11,
+          :numBool12 
+        ) 
+        returning numBool03, numBool04 
+        into :numBool03, :numBool04;
+        end;
+
+  - methodName: findNumBoolAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          numBool01,
+          numBool11
+        into
+          :numBool01,
+          :numBool11 
+        from tnumBool
+        where id_NumBool = :idNumBool
+
+  - methodName: findNumBoolAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          numBool01,
+          numBool11
+        into
+          :numBool01,
+          :numBool11 
+        from tnumBool
+        where id_NumBool = :idNumBool
+
+  - methodName: findNumBoolAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          numBool01
+        into
+          :numBool01
+        from tnumBool
+        where numBool02 = :numBool02
+
+  - methodName: findNumBoolAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          numBool11
+        into
+          :numBool11
+        from tnumBool
+        where numBool12 = :numBool12
+
+  - methodName: findNumBoolAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          numBool01,
+          numBool11
+        into
+          :numBool01,
+          :numBool11 
+        from tnumBool
+        where id_NumBool = :idNumBool

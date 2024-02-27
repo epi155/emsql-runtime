@@ -203,6 +203,14 @@ public class EmSQL {
         boolean it=rs.getBoolean(i);
         return rs.wasNull() ? null : it;
     }
+    public static Boolean getNumBool(ResultSet rs, int i) throws SQLException {
+        byte it=rs.getByte(i);
+        return rs.wasNull() ? null : (it==1);
+    }
+    public static Byte getByte(ResultSet rs, int i) throws SQLException {
+        byte it=rs.getByte(i);
+        return rs.wasNull() ? null : it;
+    }
     public static Short getShort(ResultSet rs, int i) throws SQLException {
         short it=rs.getShort(i);
         return rs.wasNull() ? null : it;
@@ -230,6 +238,20 @@ public class EmSQL {
             ps.setNull(i, Types.BOOLEAN);
         } else {
             ps.setBoolean(i, it);
+        }
+    }
+    public static void setNumBool(PreparedStatement ps, int i, Boolean it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TINYINT);
+        } else {
+            ps.setByte(i, (byte) (it ? 1 : 0));
+        }
+    }
+    public static void setByte(PreparedStatement ps, int i, Byte it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TINYINT);
+        } else {
+            ps.setByte(i, it);
         }
     }
     public static void setShort(PreparedStatement ps, int i, Short it) throws SQLException {
@@ -313,6 +335,14 @@ public class EmSQL {
     //
     public static Boolean getBoolean(CallableStatement cs, int i) throws SQLException {
         boolean it=cs.getBoolean(i);
+        return cs.wasNull() ? null : it;
+    }
+    public static Boolean getNumBool(CallableStatement cs, int i) throws SQLException {
+        byte it=cs.getByte(i);
+        return cs.wasNull() ? null : (it==1);
+    }
+    public static Byte getByte(CallableStatement cs, int i) throws SQLException {
+        byte it=cs.getByte(i);
         return cs.wasNull() ? null : it;
     }
     public static Short getShort(CallableStatement cs, int i) throws SQLException {
