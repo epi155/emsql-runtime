@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class SqlUpdateBatch3<U,V,W> extends BatchAction {
-    protected SqlUpdateBatch3(PreparedStatement ps, int batchSize) {
-        super(ps, batchSize);
+    protected SqlUpdateBatch3(String query, PreparedStatement ps, int batchSize) {
+        super(query, ps, batchSize);
     }
 
     /**

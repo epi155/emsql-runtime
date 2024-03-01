@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class SqlDeleteBatch<I> extends BatchAction {
-    protected SqlDeleteBatch(PreparedStatement ps, int batchSize) {
-        super(ps, batchSize);
+    protected SqlDeleteBatch(String query, PreparedStatement ps, int batchSize) {
+        super(query, ps, batchSize);
     }
 
     /**

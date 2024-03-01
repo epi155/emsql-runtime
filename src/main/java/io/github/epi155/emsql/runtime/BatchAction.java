@@ -12,12 +12,14 @@ import java.util.concurrent.locks.ReentrantLock;
 abstract class  BatchAction implements AutoCloseable {
     protected final PreparedStatement ps;
     private final int batchSize;
+    private final String query;
     @Setter
     private EConsumer<int[]> trigger;
     private int pending = 0;
     private final Lock lock = new ReentrantLock();
 
-    protected BatchAction(PreparedStatement ps, int batchSize) {
+    protected BatchAction(String query, PreparedStatement ps, int batchSize) {
+        this.query = query;
         this.ps = ps;
         this.batchSize = batchSize;
     }
@@ -37,7 +39,7 @@ abstract class  BatchAction implements AutoCloseable {
 
     public void flush() throws SQLException {
         if (pending > 0) {
-            log.debug("Executing batch {} ...", pending);
+            log.debug("Executing {}x Query Batch {} ...", pending, query);
             int[] n;
             lock.lock();    // stop queuing
             try {
