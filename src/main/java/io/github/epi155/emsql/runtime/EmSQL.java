@@ -331,6 +331,13 @@ public class EmSQL {
             ps.setBigDecimal(i, it);
         }
     }
+    public static void setBytes(PreparedStatement ps, int i, byte[] it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.BINARY);
+        } else {
+            ps.setBytes(i, it);
+        }
+    }
     //_____________________________________________________________
     //
     public static Boolean getBoolean(CallableStatement cs, int i) throws SQLException {

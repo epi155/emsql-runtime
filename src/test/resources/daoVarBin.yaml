@@ -1,0 +1,188 @@
+packageName: com.example.emsql
+className: DaoVarBinary
+declare:
+  idVarBinary: long
+  varBinary01: VarBinary?
+  varBinary02: VarBinary?
+  varBinary03: VarBinary?
+  varBinary04: VarBinary?
+  varBinary11: VarBinary
+  varBinary12: VarBinary
+  varBinary13: VarBinary
+  varBinary14: VarBinary
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tvarBinary (
+          varBinary01,
+          varBinary11
+        ) values (
+          :varBinary01,
+          :varBinary11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        ) 
+        returning varBinary13 into :varBinary13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        ) 
+        returning varBinary03 into :varBinary03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        ) 
+        returning varBinary13, varBinary14 
+        into :varBinary13, :varBinary14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tvarBinary (
+          varBinary01,
+          varBinary02,
+          varBinary11,
+          varBinary12
+        ) values (
+          :varBinary01,
+          :varBinary02,
+          :varBinary11,
+          :varBinary12 
+        ) 
+        returning varBinary03, varBinary04 
+        into :varBinary03, :varBinary04;
+        end;
+
+  - methodName: findVarBinaryAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          varBinary01,
+          varBinary11
+        into
+          :varBinary01,
+          :varBinary11 
+        from tvarBinary
+        where id_VarBinary = :idVarBinary
+
+  - methodName: findVarBinaryAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          varBinary01,
+          varBinary11
+        into
+          :varBinary01,
+          :varBinary11 
+        from tvarBinary
+        where id_VarBinary = :idVarBinary
+
+  - methodName: findVarBinaryAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          varBinary01
+        into
+          :varBinary01
+        from tvarBinary
+        where varBinary02 = :varBinary02
+
+  - methodName: findVarBinaryAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          varBinary11
+        into
+          :varBinary11
+        from tvarBinary
+        where varBinary12 = :varBinary12
+
+  - methodName: findVarBinaryAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          varBinary01,
+          varBinary11
+        into
+          :varBinary01,
+          :varBinary11 
+        from tvarBinary
+        where id_VarBinary = :idVarBinary

@@ -216,6 +216,8 @@
                                 <module>roSelect.yaml</module>
                                 <module>rdSelect.yaml</module>
                                 <module>rrSelect.yaml</module>
+                                <module>daoBin.yaml</module>
+                                <module>daoVarBin.yaml</module>
                             </modules>
                         </configuration>
                     </execution>
