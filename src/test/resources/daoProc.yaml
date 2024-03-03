@@ -23,6 +23,11 @@ methods:
       execSql: |
         call PRENOTA_EWL(:out, :abi, :posi, :circ, :aff, :cpp, :qty, :agen)
 
+  - methodName: prenota2
+    perform: !CallBatch
+      execSql: |
+        call PRENOTA_WL(:abi, :posi, :circ, :aff, :cpp, :qty, :agen)
+
   - methodName: insert
     perform: !InlineProcedure
       output:
@@ -42,4 +47,24 @@ methods:
             :bool12
           )
           returning idBool into :idBool;
+        end; 
+
+  - methodName: insert2
+    perform: !InlineBatch
+#      output:
+#        fields:
+#          - idBool
+      execSql: |
+        begin 
+          insert into tbool (
+            bool01,
+            bool02,
+            bool11,
+            bool12
+          ) values (
+            :bool01,
+            :bool02,
+            :bool11,
+            :bool12
+          )
         end; 
