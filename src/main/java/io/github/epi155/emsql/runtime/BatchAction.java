@@ -3,14 +3,16 @@ package io.github.epi155.emsql.runtime;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.BatchUpdateException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 abstract class  BatchAction implements AutoCloseable {
-    protected final PreparedStatement ps;
+    private final PreparedStatement ps;
     private final int batchSize;
     private final String query;
     @Setter
@@ -39,12 +41,25 @@ abstract class  BatchAction implements AutoCloseable {
 
     public void flush() throws SQLException {
         if (pending > 0) {
-            log.debug("Executing {}x Query Batch {} ...", pending, query);
+            if (log.isDebugEnabled()) {
+                log.debug("Executing {}x Query Batch {} ...", pending, query);
+            } else {
+                log.info("Executing {}x Query Batch {} ...", pending, this.getClass().getSimpleName());
+            }
             int[] n;
             lock.lock();    // stop queuing
             try {
                 n = ps.executeBatch();
                 pending = 0;
+            } catch (BatchUpdateException e) {
+                int[] updateCount = e.getUpdateCounts();
+                for(int k=0; k<updateCount.length; k++) {
+                    int code = updateCount[k];
+                    if (code == Statement.EXECUTE_FAILED) {
+                        log.error("Error on request {}/{}, State: {}, Mesg: {}", k+1, pending, e.getSQLState(), e.getMessage());
+                    }
+                }
+                throw e;
             } finally {
                 lock.unlock();
             }
