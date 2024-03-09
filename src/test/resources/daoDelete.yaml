@@ -10,12 +10,19 @@ declare:
   bool12: Bool
   bool13: Bool
   bool14: Bool
+  boolList: ( bool11 )
 methods:
   - methodName: delete01
     perform: !Delete
       execSql: |
         delete from tbool
-        where bool01 = :bool01 
+        where bool01 = :bool01
+
+  - methodName: deleteQ1
+    perform: !Delete
+      execSql: |
+        delete from tbool
+        where bool01 in ( :boolList ) 
 
   - methodName: delete02
     perform: !Delete

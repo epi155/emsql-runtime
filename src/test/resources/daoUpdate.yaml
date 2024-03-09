@@ -10,6 +10,7 @@ declare:
   bool12: Bool
   bool13: Bool
   bool14: Bool
+  boolList: ( bool11 )
 methods:
   - methodName: update01
     perform: !Update
@@ -19,6 +20,16 @@ methods:
         update tbool
         set bool11 = :bool11
         where bool01 = :bool01 
+
+  - methodName: updateQ1
+    perform: !Update
+      input:
+        delegate: no
+      execSql: |
+        update tbool
+        set bool11 = :bool11
+        where bool01 = :bool01
+        and   bool02 in ( :boolList )
 
   - methodName: update02
     perform: !Update

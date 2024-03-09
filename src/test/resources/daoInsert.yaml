@@ -10,6 +10,7 @@ declare:
   bool12: Bool
   bool13: Bool
   bool14: Bool
+  boolList: ( bool11 )
 methods:
   - methodName: insert01
     perform: !Insert
@@ -27,6 +28,15 @@ methods:
           :bool11,
           :bool12
         ) 
+
+  - methodName: insertQ1
+    perform: !Insert
+      execSql: |
+        insert into tbool 
+        ( bool01, bool02, bool11, bool12 ) 
+        select true, :bool02, bool11, bool12
+        from tbool
+        where bool11 in ( :boolList )
 
   - methodName: insert02
     perform: !InsertReturnKeys
