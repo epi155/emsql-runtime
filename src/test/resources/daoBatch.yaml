@@ -39,12 +39,12 @@ methods:
         and   bool12 = :bool12
         and   bool13 = :bool13
 
-  - methodName: queue03
-    perform: !UpdateBatch
-      execSql: |
-        update tbool
-        set bool04 = true
-        where bool14 is null
+#  - methodName: queue03
+#    perform: !UpdateBatch
+#      execSql: |
+#        update tbool
+#        set bool04 = true
+#        where bool14 is null
 
   - methodName: queue04
     perform: !UpdateBatch

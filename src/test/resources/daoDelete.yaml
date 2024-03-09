@@ -43,7 +43,7 @@ methods:
       timeout: 5
       execSql: |
         delete from tbool
-        where bool01 = bool01 
+        where bool01 = :bool01 
 
   - methodName: delete12
     perform: !DeleteBatch
