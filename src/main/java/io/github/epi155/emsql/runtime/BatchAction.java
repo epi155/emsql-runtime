@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 abstract class  BatchAction implements AutoCloseable {
-    private final PreparedStatement ps;
+    protected final PreparedStatement ps;
     private final int batchSize;
     private final String query;
     @Setter
