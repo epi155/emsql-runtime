@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>io.github.epi155</groupId>
                 <artifactId>emsql-maven-plugin</artifactId>
-                <version>0.1-A4-SNAPSHOT</version>
+                <version>0.1-A4</version>
                 <executions>
                     <execution>
                         <id>test</id>
