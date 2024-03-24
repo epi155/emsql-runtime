@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoVarchar
+className: DaoNVarchar
 declare:
-  idVarchar: long
-  varchar01: Varchar?
-  varchar02: Varchar?
-  varchar03: Varchar?
-  varchar04: Varchar?
-  varchar11: Varchar
-  varchar12: Varchar
-  varchar13: Varchar
-  varchar14: Varchar
+  idNVarchar: long
+  varchar01: NVarchar?
+  varchar02: NVarchar?
+  varchar03: NVarchar?
+  varchar04: NVarchar?
+  varchar11: NVarchar
+  varchar12: NVarchar
+  varchar13: NVarchar
+  varchar14: NVarchar
 methods:
   - methodName: insert01
     perform: !Insert
@@ -125,7 +125,7 @@ methods:
         into :varchar03, :varchar04;
         end;
 
-  - methodName: findVarcharAny
+  - methodName: findNVarcharAny
     perform: !SelectOptional
       execSql: |
         select
@@ -135,9 +135,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_NVarchar = :idNVarchar
 
-  - methodName: findVarcharAnyD
+  - methodName: findNVarcharAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -149,9 +149,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_NVarchar = :idNVarchar
 
-  - methodName: findVarcharAny01
+  - methodName: findNVarcharAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -161,7 +161,7 @@ methods:
         from tvarchar
         where varchar02 = :varchar02
 
-  - methodName: findVarcharAny11
+  - methodName: findNVarcharAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -171,7 +171,7 @@ methods:
         from tvarchar
         where varchar12 = :varchar12
 
-  - methodName: findVarcharAnyR
+  - methodName: findNVarcharAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -183,7 +183,7 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_NVarchar = :idNVarchar
 
   - methodName: call01
     perform: !CallProcedure

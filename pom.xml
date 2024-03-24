@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>io.github.epi155</groupId>
                 <artifactId>emsql-maven-plugin</artifactId>
-                <version>0.1-A4</version>
+                <version>0.1-A5-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>test</id>
@@ -180,11 +180,16 @@
                             <generateDirectory>${project.build.directory}/generated-test-sources/emsql</generateDirectory>
                             <debugCode>true</debugCode>
                             <modules>
+                                <module>daoArray.yaml</module>
                                 <module>daoBatch.yaml</module>
+                                <module>daoBin.yaml</module>
+                                <module>daoBlob.yaml</module>
                                 <module>daoBool.yaml</module>
-                                <module>daoNBool.yaml</module>
+                                <module>daoBStream.yaml</module>
                                 <module>daoByte.yaml</module>
                                 <module>daoChar.yaml</module>
+                                <module>daoClob.yaml</module>
+                                <module>daoCStream.yaml</module>
                                 <module>daoCursor.yaml</module>
                                 <module>daoDate.yaml</module>
                                 <module>daoDelete.yaml</module>
@@ -193,31 +198,45 @@
                                 <module>daoInsert.yaml</module>
                                 <module>daoInt.yaml</module>
                                 <module>daoLDate.yaml</module>
+                                <module>daoList2.yaml</module>
+                                <module>daoList.yaml</module>
+                                <module>daoLNVCharS.yaml</module>
+                                <module>daoLNVChar.yaml</module>
                                 <module>daoLong.yaml</module>
                                 <module>daoLTime.yaml</module>
                                 <module>daoLTmst.yaml</module>
+                                <module>daoLVarBinS.yaml</module>
+                                <module>daoLVarBin.yaml</module>
+                                <module>daoLVCharS.yaml</module>
+                                <module>daoLVChar.yaml</module>
+                                <module>daoNBool.yaml</module>
+                                <module>daoNChar.yaml</module>
+                                <module>daoNClob.yaml</module>
+                                <module>daoNCStream.yaml</module>
+                                <module>daoNest.yaml</module>
                                 <module>daoNumb.yaml</module>
+                                <module>daoProc.yaml</module>
+                                <module>daoRef.yaml</module>
+                                <module>daoRow.yaml</module>
                                 <module>daoSelect.yaml</module>
                                 <module>daoShort.yaml</module>
                                 <module>daoTime.yaml</module>
                                 <module>daoTmst.yaml</module>
                                 <module>daoUpdate.yaml</module>
-                                <module>daoVChar.yaml</module>
-                                <module>daoProc.yaml</module>
-                                <module>daoList.yaml</module>
-                                <module>daoList0.yaml</module>
-                                <module>daoList2.yaml</module>
-                                <module>ooSelect.yaml</module>
-                                <module>odSelect.yaml</module>
-                                <module>orSelect.yaml</module>
-                                <module>doSelect.yaml</module>
-                                <module>ddSelect.yaml</module>
-                                <module>drSelect.yaml</module>
-                                <module>roSelect.yaml</module>
-                                <module>rdSelect.yaml</module>
-                                <module>rrSelect.yaml</module>
-                                <module>daoBin.yaml</module>
+                                <module>daoUrl.yaml</module>
                                 <module>daoVarBin.yaml</module>
+                                <module>daoVChar.yaml</module>
+                                <module>daoVNChar.yaml</module>
+                                <module>daoXml.yaml</module>
+                                <module>ddSelect.yaml</module>
+                                <module>doSelect.yaml</module>
+                                <module>drSelect.yaml</module>
+                                <module>odSelect.yaml</module>
+                                <module>ooSelect.yaml</module>
+                                <module>orSelect.yaml</module>
+                                <module>rdSelect.yaml</module>
+                                <module>roSelect.yaml</module>
+                                <module>rrSelect.yaml</module>
                             </modules>
                         </configuration>
                     </execution>

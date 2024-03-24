@@ -186,3 +186,27 @@ methods:
           :time11 
         from ttime
         where id_Time = :idTime
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - time02
+          - time12
+      execSql: |
+        call solve(:time01, :time11, :time02, :time12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - time02
+          - time12
+      execSql: |
+        call solve(:time01, :time11, 
+                   :time03, :time13,
+                   :time04, :time14,
+                   :time02, :time12)

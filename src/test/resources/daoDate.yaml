@@ -184,3 +184,27 @@ methods:
           :date11 
         from tdate
         where id_Date = :idDate
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - date02
+          - date12
+      execSql: |
+        call solve(:date01, :date11, :date02, :date12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - date02
+          - date12
+      execSql: |
+        call solve(:date01, :date11, 
+                   :date03, :date13,
+                   :date04, :date14,
+                   :date02, :date12)

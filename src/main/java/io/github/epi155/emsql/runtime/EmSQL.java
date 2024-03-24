@@ -1,9 +1,12 @@
 package io.github.epi155.emsql.runtime;
 
+import java.io.InputStream;
+import java.io.Reader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.sql.*;
 
 public class EmSQL {
@@ -284,7 +287,7 @@ public class EmSQL {
     }
     public static void setFloat(PreparedStatement ps, int i, Float it) throws SQLException {
         if (it==null) {
-            ps.setNull(i, Types.FLOAT);
+            ps.setNull(i, Types.REAL); // FLOAT ?
         } else {
             ps.setFloat(i, it);
         }
@@ -336,6 +339,139 @@ public class EmSQL {
             ps.setNull(i, Types.BINARY);
         } else {
             ps.setBytes(i, it);
+        }
+    }
+    public static void setNChar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NCHAR);
+        } else {
+            ps.setNString(i, it);
+        }
+    }
+    public static void setNVarChar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NVARCHAR);
+        } else {
+            ps.setNString(i, it);
+        }
+    }
+    public static void setLongVarBinary(PreparedStatement ps, int i, byte[] it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGVARBINARY);
+        } else {
+            ps.setBytes(i, it);
+        }
+    }
+    public static void setBinaryStream(PreparedStatement ps, int i, InputStream it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGVARBINARY);
+        } else {
+            ps.setBinaryStream(i, it);
+        }
+    }
+    public static void setLongVarChar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGVARCHAR);
+        } else {
+            ps.setString(i, it);
+        }
+    }
+    public static void setCharacterStream(PreparedStatement ps, int i, Reader it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGVARCHAR);
+        } else {
+            ps.setCharacterStream(i, it);
+        }
+    }
+    public static void setLongNVarChar(PreparedStatement ps, int i, String it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGNVARCHAR);
+        } else {
+            ps.setNString(i, it);
+        }
+    }
+    public static void setNCharacterStream(PreparedStatement ps, int i, Reader it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.LONGNVARCHAR);
+        } else {
+            ps.setNCharacterStream(i, it);
+        }
+    }
+    public static void setBlob(PreparedStatement ps, int i, Blob it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.BLOB);
+        } else {
+            ps.setBlob(i, it);
+        }
+    }
+    public static void setBlobStream(PreparedStatement ps, int i, InputStream it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.BLOB);
+        } else {
+            ps.setBlob(i, it);
+        }
+    }
+    public static void setClob(PreparedStatement ps, int i, Clob it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.CLOB);
+        } else {
+            ps.setClob(i, it);
+        }
+    }
+    public static void setClobStream(PreparedStatement ps, int i, Reader it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.CLOB);
+        } else {
+            ps.setClob(i, it);
+        }
+    }
+    public static void setNClob(PreparedStatement ps, int i, NClob it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NCLOB);
+        } else {
+            ps.setNClob(i, it);
+        }
+    }
+    public static void setNClobStream(PreparedStatement ps, int i, Reader it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NCLOB);
+        } else {
+            ps.setNClob(i, it);
+        }
+    }
+    public static void setRef(PreparedStatement ps, int i, Ref it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.REF);
+        } else {
+            ps.setRef(i, it);
+        }
+    }
+    public static void setRowId(PreparedStatement ps, int i, RowId it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.ROWID);
+        } else {
+            ps.setRowId(i, it);
+        }
+    }
+    public static void setSQLXML(PreparedStatement ps, int i, SQLXML it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.SQLXML);
+        } else {
+            ps.setSQLXML(i, it);
+        }
+    }
+    public static void setURL(PreparedStatement ps, int i, URL it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.DATALINK);
+        } else {
+            ps.setURL(i, it);
+        }
+    }
+    public static void setArray(PreparedStatement ps, int i, Array it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.ARRAY);
+        } else {
+            ps.setArray(i, it);
         }
     }
     //_____________________________________________________________

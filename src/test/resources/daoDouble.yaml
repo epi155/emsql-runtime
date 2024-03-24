@@ -186,3 +186,27 @@ methods:
           :double11 
         from tdouble
         where id_Double = :idDouble
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - double02
+          - double12
+      execSql: |
+        call solve(:double01, :double11, :double02, :double12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - double02
+          - double12
+      execSql: |
+        call solve(:double01, :double11, 
+                   :double03, :double13,
+                   :double04, :double14,
+                   :double02, :double12)

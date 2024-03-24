@@ -184,3 +184,27 @@ methods:
           :int11 
         from tint
         where id_Int = :idInt
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - int02
+          - int12
+      execSql: |
+        call solve(:int01, :int11, :int02, :int12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - int02
+          - int12
+      execSql: |
+        call solve(:int01, :int11, 
+                   :int03, :int13,
+                   :int04, :int14,
+                   :int02, :int12)

@@ -1,0 +1,212 @@
+packageName: com.example.emsql
+className: DaoClobStream
+declare:
+  idClobStream: long
+  charStream01: ClobStream?
+  charStream02: ClobStream?
+  charStream03: ClobStream?
+  charStream04: ClobStream?
+  charStream11: ClobStream
+  charStream12: ClobStream
+  charStream13: ClobStream
+  charStream14: ClobStream
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tcharStream (
+          charStream01,
+          charStream11
+        ) values (
+          :charStream01,
+          :charStream11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        ) 
+        returning charStream13 into :charStream13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        ) 
+        returning charStream03 into :charStream03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        ) 
+        returning charStream13, charStream14 
+        into :charStream13, :charStream14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tcharStream (
+          charStream01,
+          charStream02,
+          charStream11,
+          charStream12
+        ) values (
+          :charStream01,
+          :charStream02,
+          :charStream11,
+          :charStream12 
+        ) 
+        returning charStream03, charStream04 
+        into :charStream03, :charStream04;
+        end;
+
+  - methodName: findClobStreamAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          charStream01,
+          charStream11
+        into
+          :charStream01,
+          :charStream11 
+        from tcharStream
+        where id_ClobStream = :idClobStream
+
+  - methodName: findClobStreamAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          charStream01,
+          charStream11
+        into
+          :charStream01,
+          :charStream11 
+        from tcharStream
+        where id_ClobStream = :idClobStream
+
+  - methodName: findClobStreamAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          charStream01
+        into
+          :charStream01
+        from tcharStream
+        where charStream02 = :charStream02
+
+  - methodName: findClobStreamAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          charStream11
+        into
+          :charStream11
+        from tcharStream
+        where charStream12 = :charStream12
+
+  - methodName: findClobStreamAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          charStream01,
+          charStream11
+        into
+          :charStream01,
+          :charStream11 
+        from tcharStream
+        where id_ClobStream = :idClobStream
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - charStream02
+          - charStream12
+      execSql: |
+        call solve(:charStream01, :charStream11, :charStream02, :charStream12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - charStream02
+          - charStream12
+      execSql: |
+        call solve(:charStream01, :charStream11, 
+                   :charStream03, :charStream13,
+                   :charStream04, :charStream14,
+                   :charStream02, :charStream12)

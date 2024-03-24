@@ -1,0 +1,212 @@
+packageName: com.example.emsql
+className: DaoClob
+declare:
+  idClob: long
+  clob01: Clob?
+  clob02: Clob?
+  clob03: Clob?
+  clob04: Clob?
+  clob11: Clob
+  clob12: Clob
+  clob13: Clob
+  clob14: Clob
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tclob (
+          clob01,
+          clob11
+        ) values (
+          :clob01,
+          :clob11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        ) 
+        returning clob13 into :clob13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        ) 
+        returning clob03 into :clob03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        ) 
+        returning clob13, clob14 
+        into :clob13, :clob14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tclob (
+          clob01,
+          clob02,
+          clob11,
+          clob12
+        ) values (
+          :clob01,
+          :clob02,
+          :clob11,
+          :clob12 
+        ) 
+        returning clob03, clob04 
+        into :clob03, :clob04;
+        end;
+
+  - methodName: findClobAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          clob01,
+          clob11
+        into
+          :clob01,
+          :clob11 
+        from tclob
+        where id_Clob = :idClob
+
+  - methodName: findClobAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          clob01,
+          clob11
+        into
+          :clob01,
+          :clob11 
+        from tclob
+        where id_Clob = :idClob
+
+  - methodName: findClobAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          clob01
+        into
+          :clob01
+        from tclob
+        where clob02 = :clob02
+
+  - methodName: findClobAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          clob11
+        into
+          :clob11
+        from tclob
+        where clob12 = :clob12
+
+  - methodName: findClobAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          clob01,
+          clob11
+        into
+          :clob01,
+          :clob11 
+        from tclob
+        where id_Clob = :idClob
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - clob02
+          - clob12
+      execSql: |
+        call solve(:clob01, :clob11, :clob02, :clob12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - clob02
+          - clob12
+      execSql: |
+        call solve(:clob01, :clob11, 
+                   :clob03, :clob13,
+                   :clob04, :clob14,
+                   :clob02, :clob12)

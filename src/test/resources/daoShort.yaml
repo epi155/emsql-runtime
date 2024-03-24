@@ -184,3 +184,27 @@ methods:
           :short11 
         from tshort
         where id_Short = :idShort
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - short02
+          - short12
+      execSql: |
+        call solve(:short01, :short11, :short02, :short12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - short02
+          - short12
+      execSql: |
+        call solve(:short01, :short11, 
+                   :short03, :short13,
+                   :short04, :short14,
+                   :short02, :short12)

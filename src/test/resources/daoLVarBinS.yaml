@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoVarBinary
+className: DaoLongVarBinaryStream
 declare:
-  idVarBinary: long
-  varBinary01: VarBinary?
-  varBinary02: VarBinary?
-  varBinary03: VarBinary?
-  varBinary04: VarBinary?
-  varBinary11: VarBinary
-  varBinary12: VarBinary
-  varBinary13: VarBinary
-  varBinary14: VarBinary
+  idLongVarBinaryStream: long
+  varBinary01: LongVarBinaryStream?
+  varBinary02: LongVarBinaryStream?
+  varBinary03: LongVarBinaryStream?
+  varBinary04: LongVarBinaryStream?
+  varBinary11: LongVarBinaryStream
+  varBinary12: LongVarBinaryStream
+  varBinary13: LongVarBinaryStream
+  varBinary14: LongVarBinaryStream
 methods:
   - methodName: insert01
     perform: !Insert
@@ -127,7 +127,7 @@ methods:
         into :varBinary03, :varBinary04;
         end;
 
-  - methodName: findVarBinaryAny
+  - methodName: findLongVarBinaryStreamAny
     perform: !SelectOptional
       execSql: |
         select
@@ -137,9 +137,9 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinaryStream = :idLongVarBinaryStream
 
-  - methodName: findVarBinaryAnyD
+  - methodName: findLongVarBinaryStreamAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -151,9 +151,9 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinaryStream = :idLongVarBinaryStream
 
-  - methodName: findVarBinaryAny01
+  - methodName: findLongVarBinaryStreamAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -163,7 +163,7 @@ methods:
         from tvarBinary
         where varBinary02 = :varBinary02
 
-  - methodName: findVarBinaryAny11
+  - methodName: findLongVarBinaryStreamAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -173,7 +173,7 @@ methods:
         from tvarBinary
         where varBinary12 = :varBinary12
 
-  - methodName: findVarBinaryAnyR
+  - methodName: findLongVarBinaryStreamAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -185,14 +185,14 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinaryStream = :idLongVarBinaryStream
 
   - methodName: call01
     perform: !CallProcedure
-      output:
-        fields:
-          - varBinary02
-          - varBinary12
+#      output:
+#        fields:
+#          - varBinary02
+#          - varBinary12
       execSql: |
         call solve(:varBinary01, :varBinary11, :varBinary02, :varBinary12)
 
@@ -202,11 +202,11 @@ methods:
         reflect: yes
       output:
         reflect: yes
-        fields:
-          - varBinary02
-          - varBinary12
+#        fields:
+#          - varBinary02
+#          - varBinary12
       execSql: |
-        call solve(:varBinary01, :varBinary11, 
+        call solve(:varBinary01, :varBinary11,
                    :varBinary03, :varBinary13,
                    :varBinary04, :varBinary14,
                    :varBinary02, :varBinary12)

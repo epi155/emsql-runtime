@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoVarBinary
+className: DaoLongVarBinary
 declare:
-  idVarBinary: long
-  varBinary01: VarBinary?
-  varBinary02: VarBinary?
-  varBinary03: VarBinary?
-  varBinary04: VarBinary?
-  varBinary11: VarBinary
-  varBinary12: VarBinary
-  varBinary13: VarBinary
-  varBinary14: VarBinary
+  idLongVarBinary: long
+  varBinary01: LongVarBinary?
+  varBinary02: LongVarBinary?
+  varBinary03: LongVarBinary?
+  varBinary04: LongVarBinary?
+  varBinary11: LongVarBinary
+  varBinary12: LongVarBinary
+  varBinary13: LongVarBinary
+  varBinary14: LongVarBinary
 methods:
   - methodName: insert01
     perform: !Insert
@@ -127,7 +127,7 @@ methods:
         into :varBinary03, :varBinary04;
         end;
 
-  - methodName: findVarBinaryAny
+  - methodName: findLongVarBinaryAny
     perform: !SelectOptional
       execSql: |
         select
@@ -137,9 +137,9 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinary = :idLongVarBinary
 
-  - methodName: findVarBinaryAnyD
+  - methodName: findLongVarBinaryAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -151,9 +151,9 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinary = :idLongVarBinary
 
-  - methodName: findVarBinaryAny01
+  - methodName: findLongVarBinaryAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -163,7 +163,7 @@ methods:
         from tvarBinary
         where varBinary02 = :varBinary02
 
-  - methodName: findVarBinaryAny11
+  - methodName: findLongVarBinaryAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -173,7 +173,7 @@ methods:
         from tvarBinary
         where varBinary12 = :varBinary12
 
-  - methodName: findVarBinaryAnyR
+  - methodName: findLongVarBinaryAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -185,7 +185,7 @@ methods:
           :varBinary01,
           :varBinary11 
         from tvarBinary
-        where id_VarBinary = :idVarBinary
+        where id_LongVarBinary = :idLongVarBinary
 
   - methodName: call01
     perform: !CallProcedure

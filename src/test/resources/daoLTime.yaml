@@ -186,3 +186,27 @@ methods:
           :localTime11 
         from tlocalTime
         where id_LocalTime = :idLocalTime
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - localTime02
+          - localTime12
+      execSql: |
+        call solve(:localTime01, :localTime11, :localTime02, :localTime12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - localTime02
+          - localTime12
+      execSql: |
+        call solve(:localTime01, :localTime11, 
+                   :localTime03, :localTime13,
+                   :localTime04, :localTime14,
+                   :localTime02, :localTime12)

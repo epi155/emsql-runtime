@@ -186,3 +186,27 @@ methods:
           :byte11 
         from tbyte
         where id_Byte = :idByte
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - byte02
+          - byte12
+      execSql: |
+        call solve(:byte01, :byte11, :byte02, :byte12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - byte02
+          - byte12
+      execSql: |
+        call solve(:byte01, :byte11, 
+                   :byte03, :byte13,
+                   :byte04, :byte14,
+                   :byte02, :byte12)

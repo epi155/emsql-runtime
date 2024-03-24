@@ -186,3 +186,27 @@ methods:
           :float11 
         from tfloat
         where id_Float = :idFloat
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - float02
+          - float12
+      execSql: |
+        call solve(:float01, :float11, :float02, :float12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - float02
+          - float12
+      execSql: |
+        call solve(:float01, :float11, 
+                   :float03, :float13,
+                   :float04, :float14,
+                   :float02, :float12)

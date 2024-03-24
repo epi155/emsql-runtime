@@ -184,3 +184,27 @@ methods:
           :long11 
         from tlong
         where id_Long = :idLong
+        
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - long02
+          - long12
+      execSql: |
+        call solve(:long01, :long11, :long02, :long12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - long02
+          - long12
+      execSql: |
+        call solve(:long01, :long11, 
+                   :long03, :long13,
+                   :long04, :long14,
+                   :long02, :long12)

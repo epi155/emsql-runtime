@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoVarchar
+className: DaoLongNVarchar
 declare:
-  idVarchar: long
-  varchar01: Varchar?
-  varchar02: Varchar?
-  varchar03: Varchar?
-  varchar04: Varchar?
-  varchar11: Varchar
-  varchar12: Varchar
-  varchar13: Varchar
-  varchar14: Varchar
+  idLongNVarchar: long
+  varchar01: LongNVarchar?
+  varchar02: LongNVarchar?
+  varchar03: LongNVarchar?
+  varchar04: LongNVarchar?
+  varchar11: LongNVarchar
+  varchar12: LongNVarchar
+  varchar13: LongNVarchar
+  varchar14: LongNVarchar
 methods:
   - methodName: insert01
     perform: !Insert
@@ -125,7 +125,7 @@ methods:
         into :varchar03, :varchar04;
         end;
 
-  - methodName: findVarcharAny
+  - methodName: findLongNVarcharAny
     perform: !SelectOptional
       execSql: |
         select
@@ -135,9 +135,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_LongNVarchar = :idLongNVarchar
 
-  - methodName: findVarcharAnyD
+  - methodName: findLongNVarcharAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -149,9 +149,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_LongNVarchar = :idLongNVarchar
 
-  - methodName: findVarcharAny01
+  - methodName: findLongNVarcharAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -161,7 +161,7 @@ methods:
         from tvarchar
         where varchar02 = :varchar02
 
-  - methodName: findVarcharAny11
+  - methodName: findLongNVarcharAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -171,7 +171,7 @@ methods:
         from tvarchar
         where varchar12 = :varchar12
 
-  - methodName: findVarcharAnyR
+  - methodName: findLongNVarcharAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -183,7 +183,7 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_LongNVarchar = :idLongNVarchar
 
   - methodName: call01
     perform: !CallProcedure

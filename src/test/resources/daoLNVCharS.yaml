@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoVarchar
+className: DaoLongNVarcharStream
 declare:
-  idVarchar: long
-  varchar01: Varchar?
-  varchar02: Varchar?
-  varchar03: Varchar?
-  varchar04: Varchar?
-  varchar11: Varchar
-  varchar12: Varchar
-  varchar13: Varchar
-  varchar14: Varchar
+  idLongNVarcharStream: long
+  varchar01: LongNVarcharStream?
+  varchar02: LongNVarcharStream?
+  varchar03: LongNVarcharStream?
+  varchar04: LongNVarcharStream?
+  varchar11: LongNVarcharStream
+  varchar12: LongNVarcharStream
+  varchar13: LongNVarcharStream
+  varchar14: LongNVarcharStream
 methods:
   - methodName: insert01
     perform: !Insert
@@ -125,7 +125,7 @@ methods:
         into :varchar03, :varchar04;
         end;
 
-  - methodName: findVarcharAny
+  - methodName: findLongNVarcharStreamAny
     perform: !SelectOptional
       execSql: |
         select
@@ -135,9 +135,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_LongNVarcharStream = :idLongNVarcharStream
 
-  - methodName: findVarcharAnyD
+  - methodName: findLongNVarcharStreamAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -149,9 +149,9 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
+        where id_LongNVarcharStream = :idLongNVarcharStream
 
-  - methodName: findVarcharAny01
+  - methodName: findLongNVarcharStreamAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -161,7 +161,7 @@ methods:
         from tvarchar
         where varchar02 = :varchar02
 
-  - methodName: findVarcharAny11
+  - methodName: findLongNVarcharStreamAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -171,7 +171,7 @@ methods:
         from tvarchar
         where varchar12 = :varchar12
 
-  - methodName: findVarcharAnyR
+  - methodName: findLongNVarcharStreamAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -183,8 +183,8 @@ methods:
           :varchar01,
           :varchar11 
         from tvarchar
-        where id_Varchar = :idVarchar
-
+        where id_LongNVarcharStream = :idLongNVarcharStream
+        
   - methodName: call01
     perform: !CallProcedure
       output:

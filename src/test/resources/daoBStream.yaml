@@ -1,0 +1,212 @@
+packageName: com.example.emsql
+className: DaoBlobStream
+declare:
+  idBlobStream: long
+  binStream01: BlobStream?
+  binStream02: BlobStream?
+  binStream03: BlobStream?
+  binStream04: BlobStream?
+  binStream11: BlobStream
+  binStream12: BlobStream
+  binStream13: BlobStream
+  binStream14: BlobStream
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tbinStream (
+          binStream01,
+          binStream11
+        ) values (
+          :binStream01,
+          :binStream11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        ) 
+        returning binStream13 into :binStream13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        ) 
+        returning binStream03 into :binStream03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        ) 
+        returning binStream13, binStream14 
+        into :binStream13, :binStream14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tbinStream (
+          binStream01,
+          binStream02,
+          binStream11,
+          binStream12
+        ) values (
+          :binStream01,
+          :binStream02,
+          :binStream11,
+          :binStream12 
+        ) 
+        returning binStream03, binStream04 
+        into :binStream03, :binStream04;
+        end;
+
+  - methodName: findBlobStreamAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          binStream01,
+          binStream11
+        into
+          :binStream01,
+          :binStream11 
+        from tbinStream
+        where id_BlobStream = :idBlobStream
+
+  - methodName: findBlobStreamAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          binStream01,
+          binStream11
+        into
+          :binStream01,
+          :binStream11 
+        from tbinStream
+        where id_BlobStream = :idBlobStream
+
+  - methodName: findBlobStreamAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          binStream01
+        into
+          :binStream01
+        from tbinStream
+        where binStream02 = :binStream02
+
+  - methodName: findBlobStreamAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          binStream11
+        into
+          :binStream11
+        from tbinStream
+        where binStream12 = :binStream12
+
+  - methodName: findBlobStreamAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          binStream01,
+          binStream11
+        into
+          :binStream01,
+          :binStream11 
+        from tbinStream
+        where id_BlobStream = :idBlobStream
+
+  - methodName: call01
+    perform: !CallProcedure
+#      output:
+#        fields:
+#          - binStream02
+#          - binStream12
+      execSql: |
+        call solve(:binStream01, :binStream11, :binStream02, :binStream12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+#        fields:
+#          - binStream02
+#          - binStream12
+      execSql: |
+        call solve(:binStream01, :binStream11,
+                   :binStream03, :binStream13,
+                   :binStream04, :binStream14,
+                   :binStream02, :binStream12)

@@ -186,3 +186,27 @@ methods:
           :numBool11 
         from tnumBool
         where id_NumBool = :idNumBool
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - numBool02
+          - numBool12
+      execSql: |
+        call solve(:numBool01, :numBool11, :numBool02, :numBool12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - numBool02
+          - numBool12
+      execSql: |
+        call solve(:numBool01, :numBool11, 
+                   :numBool03, :numBool13,
+                   :numBool04, :numBool14,
+                   :numBool02, :numBool12)

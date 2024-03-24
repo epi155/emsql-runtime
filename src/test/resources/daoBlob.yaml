@@ -1,0 +1,212 @@
+packageName: com.example.emsql
+className: DaoBlob
+declare:
+  idBlob: long
+  Blob01: Blob?
+  Blob02: Blob?
+  Blob03: Blob?
+  Blob04: Blob?
+  Blob11: Blob
+  Blob12: Blob
+  Blob13: Blob
+  Blob14: Blob
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tBlob (
+          Blob01,
+          Blob11
+        ) values (
+          :Blob01,
+          :Blob11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        ) 
+        returning Blob13 into :Blob13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        ) 
+        returning Blob03 into :Blob03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        ) 
+        returning Blob13, Blob14 
+        into :Blob13, :Blob14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tBlob (
+          Blob01,
+          Blob02,
+          Blob11,
+          Blob12
+        ) values (
+          :Blob01,
+          :Blob02,
+          :Blob11,
+          :Blob12 
+        ) 
+        returning Blob03, Blob04 
+        into :Blob03, :Blob04;
+        end;
+
+  - methodName: findBlobAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          Blob01,
+          Blob11
+        into
+          :Blob01,
+          :Blob11 
+        from tBlob
+        where id_Blob = :idBlob
+
+  - methodName: findBlobAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          Blob01,
+          Blob11
+        into
+          :Blob01,
+          :Blob11 
+        from tBlob
+        where id_Blob = :idBlob
+
+  - methodName: findBlobAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          Blob01
+        into
+          :Blob01
+        from tBlob
+        where Blob02 = :Blob02
+
+  - methodName: findBlobAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          Blob11
+        into
+          :Blob11
+        from tBlob
+        where Blob12 = :Blob12
+
+  - methodName: findBlobAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          Blob01,
+          Blob11
+        into
+          :Blob01,
+          :Blob11 
+        from tBlob
+        where id_Blob = :idBlob
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - Blob02
+          - Blob12
+      execSql: |
+        call solve(:Blob01, :Blob11, :Blob02, :Blob12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - Blob02
+          - Blob12
+      execSql: |
+        call solve(:Blob01, :Blob11, 
+                   :Blob03, :Blob13,
+                   :Blob04, :Blob14,
+                   :Blob02, :Blob12)

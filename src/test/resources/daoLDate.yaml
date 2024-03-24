@@ -184,3 +184,27 @@ methods:
           :localDate11 
         from tlocalDate
         where id_LocalDate = :idLocalDate
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - localDate02
+          - localDate12
+      execSql: |
+        call solve(:localDate01, :localDate11, :localDate02, :localDate12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - localDate02
+          - localDate12
+      execSql: |
+        call solve(:localDate01, :localDate11, 
+                   :localDate03, :localDate13,
+                   :localDate04, :localDate14,
+                   :localDate02, :localDate12)

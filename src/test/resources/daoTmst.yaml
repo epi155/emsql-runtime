@@ -184,3 +184,27 @@ methods:
           :timestamp11 
         from ttimestamp
         where id_Timestamp = :idTimestamp
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - timestamp02
+          - timestamp12
+      execSql: |
+        call solve(:timestamp01, :timestamp11, :timestamp02, :timestamp12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - timestamp02
+          - timestamp12
+      execSql: |
+        call solve(:timestamp01, :timestamp11, 
+                   :timestamp03, :timestamp13,
+                   :timestamp04, :timestamp14,
+                   :timestamp02, :timestamp12)

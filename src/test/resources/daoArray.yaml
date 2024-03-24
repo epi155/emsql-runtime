@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoBool
+className: DaoArray
 declare:
-  idBool: long
-  bool01: Bool?
-  bool02: Bool?
-  bool03: Bool?
-  bool04: Bool?
-  bool11: Bool
-  bool12: Bool
-  bool13: Bool
-  bool14: Bool
+  idArray: long
+  bool01: Array?
+  bool02: Array?
+  bool03: Array?
+  bool04: Array?
+  bool11: Array
+  bool12: Array
+  bool13: Array
+  bool14: Array
 methods:
   - methodName: insert01
     perform: !Insert
@@ -127,7 +127,7 @@ methods:
         into :bool03, :bool04;
         end;
 
-  - methodName: findBoolAny
+  - methodName: findArrayAny
     perform: !SelectOptional
       execSql: |
         select
@@ -137,9 +137,9 @@ methods:
           :bool01,
           :bool11 
         from tbool
-        where id_Bool = :idBool
+        where id_Array = :idArray
 
-  - methodName: findBoolAnyD
+  - methodName: findArrayAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -151,9 +151,9 @@ methods:
           :bool01,
           :bool11 
         from tbool
-        where id_Bool = :idBool
+        where id_Array = :idArray
 
-  - methodName: findBoolAny01
+  - methodName: findArrayAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -163,7 +163,7 @@ methods:
         from tbool
         where bool02 = :bool02
 
-  - methodName: findBoolAny11
+  - methodName: findArrayAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -173,7 +173,7 @@ methods:
         from tbool
         where bool12 = :bool12
 
-  - methodName: findBoolAnyR
+  - methodName: findArrayAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -185,7 +185,7 @@ methods:
           :bool01,
           :bool11 
         from tbool
-        where id_Bool = :idBool
+        where id_Array = :idArray
 
   - methodName: call01
     perform: !CallProcedure

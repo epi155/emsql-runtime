@@ -1,15 +1,15 @@
 packageName: com.example.emsql
-className: DaoChar
+className: DaoNChar
 declare:
-  idChar: long
-  char01: Char?
-  char02: Char?
-  char03: Char?
-  char04: Char?
-  char11: Char
-  char12: Char
-  char13: Char
-  char14: Char
+  idNChar: long
+  char01: NChar?
+  char02: NChar?
+  char03: NChar?
+  char04: NChar?
+  char11: NChar
+  char12: NChar
+  char13: NChar
+  char14: NChar
 methods:
   - methodName: insert01
     perform: !Insert
@@ -125,7 +125,7 @@ methods:
         into :char03, :char04;
         end;
 
-  - methodName: findCharAny
+  - methodName: findNCharAny
     perform: !SelectOptional
       execSql: |
         select
@@ -135,9 +135,9 @@ methods:
           :char01,
           :char11 
         from tchar
-        where id_Char = :idChar
+        where id_NChar = :idNChar
 
-  - methodName: findCharAnyD
+  - methodName: findNCharAnyD
     perform: !SelectOptional
       output:
         delegate: yes
@@ -149,9 +149,9 @@ methods:
           :char01,
           :char11 
         from tchar
-        where id_Char = :idChar
+        where id_NChar = :idNChar
 
-  - methodName: findCharAny01
+  - methodName: findNCharAny01
     perform: !SelectOptional
       execSql: |
         select
@@ -161,7 +161,7 @@ methods:
         from tchar
         where char02 = :char02
 
-  - methodName: findCharAny11
+  - methodName: findNCharAny11
     perform: !SelectOptional
       execSql: |
         select
@@ -171,7 +171,7 @@ methods:
         from tchar
         where char12 = :char12
 
-  - methodName: findCharAnyR
+  - methodName: findNCharAnyR
     perform: !SelectOptional
       output:
         reflect: yes
@@ -183,7 +183,7 @@ methods:
           :char01,
           :char11 
         from tchar
-        where id_Char = :idChar
+        where id_NChar = :idNChar
 
   - methodName: call01
     perform: !CallProcedure
