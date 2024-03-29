@@ -7,8 +7,6 @@ import java.sql.BatchUpdateException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 abstract class  BatchAction implements AutoCloseable {
@@ -18,7 +16,6 @@ abstract class  BatchAction implements AutoCloseable {
     @Setter
     private EConsumer<int[]> trigger;
     private int pending = 0;
-    private final Lock lock = new ReentrantLock();
 
     protected BatchAction(String query, PreparedStatement ps, int batchSize) {
         this.query = query;
@@ -27,13 +24,8 @@ abstract class  BatchAction implements AutoCloseable {
     }
 
     protected void addBatch() throws SQLException {
-        lock.lock();
-        try {
-            ps.addBatch();
-            pending++;
-        } finally {
-            lock.unlock();
-        }
+        ps.addBatch();
+        pending++;
         log.debug("Queued {}/{}", pending, batchSize);
         if (pending >= batchSize)
             flush();
@@ -47,7 +39,6 @@ abstract class  BatchAction implements AutoCloseable {
                 log.info("Executing {}x Query Batch {} ...", pending, this.getClass().getSimpleName());
             }
             int[] n;
-            lock.lock();    // stop queuing
             try {
                 n = ps.executeBatch();
                 pending = 0;
@@ -60,8 +51,6 @@ abstract class  BatchAction implements AutoCloseable {
                     }
                 }
                 throw e;
-            } finally {
-                lock.unlock();
             }
             log.debug("Executed batch {}.", n.length);
             if (trigger != null) {

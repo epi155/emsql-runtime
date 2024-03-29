@@ -17,11 +17,11 @@ declare:
 methods:
   - methodName: prenota
     perform: !CallProcedure
-      output:
+      input-output:
         fields:
-          - out
+          - qty
       execSql: |
-        call PRENOTA_EWL(:out, :abi, :posi, :circ, :aff, :cpp, :qty, :agen)
+        call PRENOTA_EWL(:abi, :posi, :circ, :aff, :cpp, :qty, :agen)
 
   - methodName: prenota2
     perform: !CallBatch
