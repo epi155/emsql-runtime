@@ -18,6 +18,8 @@ abstract class  BatchAction implements AutoCloseable {
     @Setter
     private EConsumer<int[]> trigger;
     @Setter(AccessLevel.PROTECTED)
+    private Runnable beforeFlush;
+    @Setter(AccessLevel.PROTECTED)
     private Runnable afterFlush;
     private int pending = 0;
 
@@ -37,6 +39,9 @@ abstract class  BatchAction implements AutoCloseable {
 
     public void flush() throws SQLException {
         if (pending > 0) {
+            if (beforeFlush != null) {
+                beforeFlush.run();
+            }
             if (log.isDebugEnabled()) {
                 log.debug("Executing {}x Query Batch {} ...", pending, query);
             } else {
