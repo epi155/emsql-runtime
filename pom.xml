@@ -252,7 +252,7 @@
                         <ignoreVersions>
                             <ignoreVersion>
                                 <type>regex</type>
-                                <version>.+-(alpha|beta)(-?\d+)?</version>
+                                <version>.+-(alpha|beta|M)(-?\d+)?</version>
                             </ignoreVersion>
                         </ignoreVersions>
                     </ruleSet>

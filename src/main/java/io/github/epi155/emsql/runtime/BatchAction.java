@@ -1,6 +1,8 @@
 package io.github.epi155.emsql.runtime;
 
+import lombok.AccessLevel;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.BatchUpdateException;
@@ -15,6 +17,8 @@ abstract class  BatchAction implements AutoCloseable {
     private final String query;
     @Setter
     private EConsumer<int[]> trigger;
+    @Setter(AccessLevel.PROTECTED)
+    private Runnable afterFlush;
     private int pending = 0;
 
     protected BatchAction(String query, PreparedStatement ps, int batchSize) {
@@ -55,6 +59,9 @@ abstract class  BatchAction implements AutoCloseable {
             log.debug("Executed batch {}.", n.length);
             if (trigger != null) {
                 trigger.accept(n);
+            }
+            if (afterFlush != null) {
+                afterFlush.run();
             }
         }
     }
