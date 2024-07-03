@@ -1,14 +1,16 @@
 package io.github.epi155.emsql.runtime;
 
-import lombok.AccessLevel;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 import java.sql.BatchUpdateException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.*;
+
+import static java.sql.Statement.SUCCESS_NO_INFO;
 
 @Slf4j
 abstract class  BatchAction implements AutoCloseable {
@@ -17,16 +19,20 @@ abstract class  BatchAction implements AutoCloseable {
     private final String query;
     @Setter
     private EConsumer<int[]> trigger;
-    @Setter(AccessLevel.PROTECTED)
-    private Runnable beforeFlush;
-    @Setter(AccessLevel.PROTECTED)
-    private Runnable afterFlush;
+    private final List<Runnable> beforeFlush = new LinkedList<>();
+    private final List<Runnable> afterFlush = new LinkedList<>();
     private int pending = 0;
 
     protected BatchAction(String query, PreparedStatement ps, int batchSize) {
         this.query = query;
         this.ps = ps;
         this.batchSize = batchSize;
+    }
+    protected void addBefore(Runnable action) {
+        beforeFlush.add(action);
+    }
+    protected void addAfter(Runnable action) {
+        afterFlush.add(action);
     }
 
     protected void addBatch() throws SQLException {
@@ -39,34 +45,85 @@ abstract class  BatchAction implements AutoCloseable {
 
     public void flush() throws SQLException {
         if (pending > 0) {
-            if (beforeFlush != null) {
-                beforeFlush.run();
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Executing {}x Query Batch {} ...", pending, query);
-            } else {
-                log.info("Executing {}x Query Batch {} ...", pending, this.getClass().getSimpleName());
-            }
-            int[] n;
+            String className = this.getClass().getName();
+            Set<String> set = FlushContext.context.get();
             try {
-                n = ps.executeBatch();
-                pending = 0;
-            } catch (BatchUpdateException e) {
-                int[] updateCount = e.getUpdateCounts();
-                for(int k=0; k<updateCount.length; k++) {
-                    int code = updateCount[k];
-                    if (code == Statement.EXECUTE_FAILED) {
-                        log.error("Error on request {}/{}, State: {}, Mesg: {}", k+1, pending, e.getSQLState(), e.getMessage());
+                if (set == null) {
+                    set = new HashSet<>(Collections.singleton(className)); // mutable set
+                    FlushContext.context.set(set);
+                    doFlush();
+                } else {
+                    if (set.contains(className)) {
+                        log.warn("Circular flush for {}, break", className);
+                    } else {
+                        set.add(className);
+                        doFlush();
                     }
                 }
-                throw e;
+            } finally {
+                if (set != null) {
+                    set.remove(className);
+                    if (set.isEmpty()) {
+                        FlushContext.context.remove();
+                    }
+                }
             }
+        }
+    }
+
+    private void doFlush() throws SQLException {
+        if (! beforeFlush.isEmpty()) {
+            for(val action: beforeFlush)
+                action.run();
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("Executing {}x Query Batch {} ...", pending, query);
+        } else {
+            log.info("Executing {}x Query Batch {} ...", pending, this.getClass().getSimpleName());
+        }
+        try {
+            int[] n = ps.executeBatch();
+            pending = 0;
             log.debug("Executed batch {}.", n.length);
             if (trigger != null) {
                 trigger.accept(n);
             }
-            if (afterFlush != null) {
-                afterFlush.run();
+            if (!afterFlush.isEmpty()) {
+                for(val action: afterFlush)
+                    action.run();
+            }
+        } catch (BatchUpdateException e) {
+            notifyError(e);
+            throw e;
+        }
+    }
+
+    public static int updateCount(int[] numUpdates) {
+        int sum = 0;
+        int threshold = 5;
+        for (int i=0; i < numUpdates.length; i++) {
+            if (numUpdates[i] == SUCCESS_NO_INFO) {
+                log.warn("Execution {}: unknown number of rows updated", i);
+                if (--threshold < 0)
+                    return SUCCESS_NO_INFO; /* -2 */
+            } else {
+                log.debug("Execution {} successful: {} rows updated", i, numUpdates[i]);
+                sum += numUpdates[i];
+            }
+        }
+        return sum;
+    }
+
+    private void notifyError(BatchUpdateException e) {
+        int[] updateCount = e.getUpdateCounts();
+        if (updateCount.length == 0) {
+            log.error("Error on request (not available)/{}, State: {}, Mesg: {}", pending, e.getSQLState(), e.getMessage());
+        } else {
+            for(int k=0; k<updateCount.length; k++) {
+                int code = updateCount[k];
+                if (code == Statement.EXECUTE_FAILED) {
+                    log.error("Error on request {}/{}, State: {}, Mesg: {}", k+1, pending, e.getSQLState(), e.getMessage());
+                }
             }
         }
     }
