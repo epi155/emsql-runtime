@@ -19,8 +19,8 @@ abstract class  BatchAction implements AutoCloseable {
     private final String query;
     @Setter
     private EConsumer<int[]> trigger;
-    private final List<Runnable> beforeFlush = new LinkedList<>();
-    private final List<Runnable> afterFlush = new LinkedList<>();
+    private final List<SqlRunnable> beforeFlush = new LinkedList<>();
+    private final List<SqlRunnable> afterFlush = new LinkedList<>();
     private int pending = 0;
 
     protected BatchAction(String query, PreparedStatement ps, int batchSize) {
@@ -28,10 +28,10 @@ abstract class  BatchAction implements AutoCloseable {
         this.ps = ps;
         this.batchSize = batchSize;
     }
-    protected void addBefore(Runnable action) {
+    protected void addBefore(SqlRunnable action) {
         beforeFlush.add(action);
     }
-    protected void addAfter(Runnable action) {
+    protected void addAfter(SqlRunnable action) {
         afterFlush.add(action);
     }
 
