@@ -1,5 +1,6 @@
 package io.github.epi155.emsql.runtime;
 
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -19,8 +20,8 @@ abstract class  BatchAction implements AutoCloseable {
     private final String query;
     @Setter
     private EConsumer<int[]> trigger;
-    private final List<SqlRunnable> beforeFlush = new LinkedList<>();
-    private final List<SqlRunnable> afterFlush = new LinkedList<>();
+    private SqlRunnable[] beforeFlush = {};
+    private SqlRunnable[] afterFlush = {};
     private int pending = 0;
 
     protected BatchAction(String query, PreparedStatement ps, int batchSize) {
@@ -28,11 +29,11 @@ abstract class  BatchAction implements AutoCloseable {
         this.ps = ps;
         this.batchSize = batchSize;
     }
-    protected void addBefore(SqlRunnable action) {
-        beforeFlush.add(action);
+    public void beforeFlush(@NonNull SqlRunnable ... actions) {
+        beforeFlush = actions;
     }
-    protected void addAfter(SqlRunnable action) {
-        afterFlush.add(action);
+    public void afterFlush(@NonNull SqlRunnable ... actions) {
+        afterFlush = actions;
     }
 
     protected void addBatch() throws SQLException {
@@ -72,10 +73,8 @@ abstract class  BatchAction implements AutoCloseable {
     }
 
     private void doFlush() throws SQLException {
-        if (! beforeFlush.isEmpty()) {
-            for(val action: beforeFlush)
-                action.run();
-        }
+        for (val action : beforeFlush)
+            action.run();
         if (log.isDebugEnabled()) {
             log.debug("Executing {}x Query Batch {} ...", pending, query);
         } else {
@@ -88,10 +87,8 @@ abstract class  BatchAction implements AutoCloseable {
             if (trigger != null) {
                 trigger.accept(n);
             }
-            if (!afterFlush.isEmpty()) {
-                for(val action: afterFlush)
-                    action.run();
-            }
+            for (val action : afterFlush)
+                action.run();
         } catch (BatchUpdateException e) {
             notifyError(e);
             throw e;
