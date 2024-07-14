@@ -9,7 +9,9 @@ import java.sql.BatchUpdateException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.sql.Statement.SUCCESS_NO_INFO;
 
