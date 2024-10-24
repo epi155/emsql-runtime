@@ -6,6 +6,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.*;
 
@@ -327,6 +328,13 @@ public class EmSQL {
             ps.setTime(i, it);
         }
     }
+    public static void setBigInteger(PreparedStatement ps, int i, BigInteger it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.NUMERIC);
+        } else {
+            ps.setBigDecimal(i, new BigDecimal(it));
+        }
+    }
     public static void setBigDecimal(PreparedStatement ps, int i, BigDecimal it) throws SQLException {
         if (it==null) {
             ps.setNull(i, Types.NUMERIC);
@@ -472,6 +480,15 @@ public class EmSQL {
             ps.setNull(i, Types.ARRAY);
         } else {
             ps.setArray(i, it);
+        }
+    }
+    //_____________________________________________________________
+    //
+    public static BigInteger toBigInteger(BigDecimal it) {
+        if (it==null) {
+            return null;
+        } else {
+            return it.toBigInteger();
         }
     }
     //_____________________________________________________________

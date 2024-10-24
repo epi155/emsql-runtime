@@ -2,14 +2,14 @@ packageName: com.example.emsql
 className: DaoNumeric
 declare:
   idNumeric: long
-  numeric01: Numeric?
-  numeric02: Numeric?
-  numeric03: Numeric?
-  numeric04: Numeric?
-  numeric11: Numeric
-  numeric12: Numeric
-  numeric13: Numeric
-  numeric14: Numeric
+  numeric01: Number?
+  numeric02: Decimal?
+  numeric03: Number?
+  numeric04: Decimal?
+  numeric11: Number
+  numeric12: Decimal
+  numeric13: Number
+  numeric14: Decimal
 methods:
   - methodName: insert01
     perform: !Insert
