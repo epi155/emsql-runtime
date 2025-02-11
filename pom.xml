@@ -47,19 +47,19 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.11.3</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.11.3</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.12</version>
+            <version>1.5.16</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -158,7 +158,7 @@
             <plugin>
                 <groupId>io.github.epi155</groupId>
                 <artifactId>emsql-maven-plugin</artifactId>
-                <version>0.1-RC2</version>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <id>test</id>
@@ -244,7 +244,7 @@
                         <ignoreVersions>
                             <ignoreVersion>
                                 <type>regex</type>
-                                <version>.+-(alpha|beta|M)(-?\d+)?</version>
+                                <version>.+-(alpha|beta|M|RC)(-?\d+)?</version>
                             </ignoreVersion>
                         </ignoreVersions>
                     </ruleSet>
