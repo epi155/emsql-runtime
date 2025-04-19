@@ -1,0 +1,212 @@
+packageName: com.example.emsql
+className: DaoTimestampZ
+declare:
+  idTimestampZ: long
+  TimestampZ01: TimestampZ?
+  TimestampZ02: TimestampZ?
+  TimestampZ03: TimestampZ?
+  TimestampZ04: TimestampZ?
+  TimestampZ11: TimestampZ
+  TimestampZ12: TimestampZ
+  TimestampZ13: TimestampZ
+  TimestampZ14: TimestampZ
+methods:
+  - methodName: insert01
+    perform: !Insert
+      execSql: |
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ11
+        ) values (
+          :TimestampZ01,
+          :TimestampZ11 
+        )
+  - methodName: insert02
+    perform: !Insert
+      timeout: 5
+      execSql: |
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        )
+  - methodName: insert02R
+    perform: !Insert
+      input:
+        reflect: yes
+      execSql: |
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        )
+  - methodName: insert02K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        ) 
+        returning TimestampZ13 into :TimestampZ13;
+        end;
+
+  - methodName: insert12K
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        ) 
+        returning TimestampZ03 into :TimestampZ03;
+        end;
+
+  - methodName: insert02K2
+    perform: !InlineProcedure
+      timeout: 5
+      execSql: |
+        begin
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        ) 
+        returning TimestampZ13, TimestampZ14 
+        into :TimestampZ13, :TimestampZ14;
+        end;
+
+  - methodName: insert12K2
+    perform: !InlineProcedure
+      execSql: |
+        begin
+        insert into tTimestampZ (
+          TimestampZ01,
+          TimestampZ02,
+          TimestampZ11,
+          TimestampZ12
+        ) values (
+          :TimestampZ01,
+          :TimestampZ02,
+          :TimestampZ11,
+          :TimestampZ12 
+        ) 
+        returning TimestampZ03, TimestampZ04 
+        into :TimestampZ03, :TimestampZ04;
+        end;
+
+  - methodName: findTimestampZAny
+    perform: !SelectOptional
+      execSql: |
+        select
+          TimestampZ01,
+          TimestampZ11
+        into
+          :TimestampZ01,
+          :TimestampZ11 
+        from tTimestampZ
+        where id_TimestampZ = :idTimestampZ
+
+  - methodName: findTimestampZAnyD
+    perform: !SelectOptional
+      output:
+        delegate: yes
+      execSql: |
+        select
+          TimestampZ01,
+          TimestampZ11
+        into
+          :TimestampZ01,
+          :TimestampZ11 
+        from tTimestampZ
+        where id_TimestampZ = :idTimestampZ
+
+  - methodName: findTimestampZAny01
+    perform: !SelectOptional
+      execSql: |
+        select
+          TimestampZ01
+        into
+          :TimestampZ01
+        from tTimestampZ
+        where TimestampZ02 = :TimestampZ02
+
+  - methodName: findTimestampZAny11
+    perform: !SelectOptional
+      execSql: |
+        select
+          TimestampZ11
+        into
+          :TimestampZ11
+        from tTimestampZ
+        where TimestampZ12 = :TimestampZ12
+
+  - methodName: findTimestampZAnyR
+    perform: !SelectOptional
+      output:
+        reflect: yes
+      execSql: |
+        select
+          TimestampZ01,
+          TimestampZ11
+        into
+          :TimestampZ01,
+          :TimestampZ11 
+        from tTimestampZ
+        where id_TimestampZ = :idTimestampZ
+
+  - methodName: call01
+    perform: !CallProcedure
+      output:
+        fields:
+          - TimestampZ02
+          - TimestampZ12
+      execSql: |
+        call solve(:TimestampZ01, :TimestampZ11, :TimestampZ02, :TimestampZ12)
+
+  - methodName: call02
+    perform: !CallProcedure
+      input:
+        reflect: yes
+      output:
+        reflect: yes
+        fields:
+          - TimestampZ02
+          - TimestampZ12
+      execSql: |
+        call solve(:TimestampZ01, :TimestampZ11, 
+                   :TimestampZ03, :TimestampZ13,
+                   :TimestampZ04, :TimestampZ14,
+                   :TimestampZ02, :TimestampZ12)

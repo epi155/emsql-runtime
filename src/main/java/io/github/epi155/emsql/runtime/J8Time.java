@@ -1,9 +1,7 @@
 package io.github.epi155.emsql.runtime;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 public class J8Time {
     private J8Time() {}
@@ -36,6 +34,20 @@ public class J8Time {
             ps.setNull(i, Types.TIME);
         } else {
             ps.setTime(i, Time.valueOf(it));
+        }
+    }
+    public static void setOffsetDateTime(PreparedStatement ps, int i, OffsetDateTime it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TIMESTAMP_WITH_TIMEZONE);
+        } else {
+            ps.setObject(i, it);
+        }
+    }
+    public static void setOffsetTime(PreparedStatement ps, int i, OffsetTime it) throws SQLException {
+        if (it==null) {
+            ps.setNull(i, Types.TIME_WITH_TIMEZONE);
+        } else {
+            ps.setObject(i, it);
         }
     }
 }
