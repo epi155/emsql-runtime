@@ -1,0 +1,60 @@
+packageName: com.example.emsql
+className: DaoDyn
+declare:
+  id: BigSerial
+  fingerprint: CHAR
+  fingerprintIssuer: CHAR?
+  serial: NUMBER
+  commonName: VARCHAR
+  organization: VARCHAR?
+  orgUnit: VARCHAR?
+  cType: INT
+  keyAlgo: VARCHAR
+  keySize: INT
+  sigAlgo: VARCHAR
+  notBefore: TIMESTAMP
+  notAfter: TIMESTAMP
+  cdRevoke: INT?
+  tsRevoke: TIMESTAMP?
+  usagePad: INT
+  vers: INT
+  lastSerial: NUMBER
+  now: TIMESTAMP
+  rawData: VARCHAR
+  page: INT
+  cFingerprint: CHAR
+  ultimate: NUMBOOL
+  count: INT
+
+  issuer.commonName: VARCHAR
+  issuer.organization: VARCHAR?
+  issuer.orgUnit: VARCHAR?
+
+methods:
+  - methodName: elencoCertificatiWithIssuer
+    perform:
+      !SelectListDyn
+      execSql: |
+        select 
+          A.K_FINGERPRINT, C.K_FINGERPRINT_ISSUER, A.CNAME, A.CORG, A.CUNIT, 
+          C.NOT_BEFORE, C.NOT_AFTER, A.KEY_SIZE, A.KEY_ALGO, A.C_TYPE, 
+          C.SERIAL, C.CD_REVOKE, C.TS_REVOKE, C.USAGE_PAD, C.VERS, 
+          B.CNAME, B.CORG, B.CUNIT, C.ULTIMATE, C.R_COUNT, C.C_FINGERPRINT 
+        into
+          :fingerprint, :fingerprintIssuer, :commonName, :organization, :orgUnit, 
+          :notBefore, :notAfter, :keySize, :keyAlgo, :cType, 
+          :serial, :cdRevoke, :tsRevoke, :usagePad, :vers,
+          :issuer.commonName, :issuer.organization, :issuer.orgUnit, :ultimate, :count, :cFingerprint 
+        from C01_CERT_BASE A 
+        join C05_CERT_BIND C on C.K_FINGERPRINT = A.K_FINGERPRINT  
+        join C01_CERT_BASE B on B.K_FINGERPRINT = C.K_FINGERPRINT_ISSUER 
+        where A.C_TYPE = :cType 
+        order by C.NOT_AFTER asc, C.NOT_BEFORE desc, A.CNAME asc, A.K_FINGERPRINT asc , C.SERIAL
+      optionalAnd:
+        cnLike: A.CNAME LIKE :commonName
+        isNotRevoked: C.CD_REVOKE is null
+        isRevoked: C.CD_REVOKE is not null
+        isNotExpired: C.NOT_BEFORE <= :now and C.NOT_AFTER >= :now
+        isExpired: (:now < C.NOT_BEFORE or :now > C.NOT_AFTER)
+        isRenewed: C.ULTIMATE = 0
+        isNotRenewed: C.ULTIMATE = 1

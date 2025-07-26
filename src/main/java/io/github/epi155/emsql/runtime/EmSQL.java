@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.*;
+import java.util.Map;
+import java.util.Set;
 
 public class EmSQL {
     private EmSQL() {}
@@ -524,5 +526,24 @@ public class EmSQL {
     public static Float getFloat(CallableStatement cs, int i) throws SQLException {
         float it=cs.getFloat(i);
         return cs.wasNull() ? null : it;
+    }
+
+    public static String buildQuery(String ante, Map<String, String> optMap, String post, Set<String> options) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ante);
+        final boolean where = (ante.toUpperCase().contains("WHERE "));
+        int c = 0;
+        for(Map.Entry<String, String> e: optMap.entrySet()) {
+            if (options.contains(e.getKey())) {
+                if (c++==0 && !where) {
+                    sb.append(" WHERE ");
+                } else {
+                    sb.append(" AND ");
+                }
+                sb.append(e.getValue());
+            }
+        }
+        sb.append(" ").append(post);
+        return sb.toString();
     }
 }
