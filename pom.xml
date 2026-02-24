@@ -26,8 +26,6 @@
         <maven.deploy.skip>false</maven.deploy.skip>
         <lombok-version>1.18.38</lombok-version>
         <maven.test.skip>false</maven.test.skip>
-        <maven.emsql.add-compile-source-root>false</maven.emsql.add-compile-source-root>
-        <maven.emsql.add-test-compile-source-root>true</maven.emsql.add-test-compile-source-root>
     </properties>
 
     <dependencies>
@@ -42,25 +40,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.17</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.13.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.13.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.18</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -155,89 +134,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>io.github.epi155</groupId>
-                <artifactId>emsql-maven-plugin</artifactId>
-                <version>1.1-A1</version>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-test-sources</phase>
-                        <configuration>
-                            <java7>true</java7>
-                            <configDirectory>${project.basedir}/src/test/resources</configDirectory>
-                            <generateDirectory>${project.build.directory}/generated-test-sources/emsql</generateDirectory>
-                            <debugCode>true</debugCode>
-                            <modules>
-                                <module>daoArray.yaml</module>
-                                <module>daoBatch.yaml</module>
-                                <module>daoBin.yaml</module>
-                                <module>daoBlob.yaml</module>
-                                <module>daoBool.yaml</module>
-                                <module>daoBStream.yaml</module>
-                                <module>daoByte.yaml</module>
-                                <module>daoChar.yaml</module>
-                                <module>daoClob.yaml</module>
-                                <module>daoCStream.yaml</module>
-                                <module>daoCursor.yaml</module>
-                                <module>daoDate.yaml</module>
-                                <module>daoDelete.yaml</module>
-                                <module>daoDouble.yaml</module>
-                                <module>daoFloat.yaml</module>
-                                <module>daoInsert.yaml</module>
-                                <module>daoInt.yaml</module>
-                                <module>daoLDate.yaml</module>
-                                <module>daoList2.yaml</module>
-                                <module>daoList.yaml</module>
-                                <module>daoLNVCharS.yaml</module>
-                                <module>daoLNVChar.yaml</module>
-                                <module>daoLong.yaml</module>
-                                <module>daoLTime.yaml</module>
-                                <module>daoLTmst.yaml</module>
-                                <module>daoLVarBinS.yaml</module>
-                                <module>daoLVarBin.yaml</module>
-                                <module>daoLVCharS.yaml</module>
-                                <module>daoLVChar.yaml</module>
-                                <module>daoNBool.yaml</module>
-                                <module>daoNChar.yaml</module>
-                                <module>daoNClob.yaml</module>
-                                <module>daoNCStream.yaml</module>
-                                <module>daoNest.yaml</module>
-                                <module>daoNumb.yaml</module>
-                                <module>daoProc.yaml</module>
-                                <module>daoRef.yaml</module>
-                                <module>daoRow.yaml</module>
-                                <module>daoSelect.yaml</module>
-                                <module>daoShort.yaml</module>
-                                <module>daoTime.yaml</module>
-                                <module>daoTmst.yaml</module>
-                                <module>daoUpdate.yaml</module>
-                                <module>daoUrl.yaml</module>
-                                <module>daoVarBin.yaml</module>
-                                <module>daoVChar.yaml</module>
-                                <module>daoVNChar.yaml</module>
-                                <module>daoXml.yaml</module>
-                                <module>ddSelect.yaml</module>
-                                <module>doSelect.yaml</module>
-                                <module>drSelect.yaml</module>
-                                <module>odSelect.yaml</module>
-                                <module>ooSelect.yaml</module>
-                                <module>orSelect.yaml</module>
-                                <module>rdSelect.yaml</module>
-                                <module>roSelect.yaml</module>
-                                <module>rrSelect.yaml</module>
-                                <module>daoTimeZ.yaml</module>
-                                <module>daoTsZ.yaml</module>
-                                <module>daoDyn.yaml</module>
-                            </modules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
