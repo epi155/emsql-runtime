@@ -2,18 +2,18 @@ package io.github.epi155.emsql.runtime;
 
 import java.sql.SQLException;
 
-public enum SqlCode {
+enum SqlCode {
     N811("More than one row", "21000", -811),
     P100("No data was found", "02000", +100),
     ;
 
-    private final SQLException e;
+    public final int code;
+    public final String state;
+    public final String reason;
 
-    SqlCode(String message, String state, int code) {
-        this.e = new SQLException(message, state, code);
-    }
-
-    public SQLException getInstance() {
-        return e;
+    SqlCode(String reason, String state, int code) {
+        this.code = code;
+        this.state = state;
+        this.reason = reason;
     }
 }
