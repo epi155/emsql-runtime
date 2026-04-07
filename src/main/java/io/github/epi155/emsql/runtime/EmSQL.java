@@ -15,6 +15,30 @@ import java.util.Set;
 public class EmSQL {
     private EmSQL() {}
 
+    private static final char C_SPACE = ' ';
+
+    /**
+     * Right PAD Space
+     *
+     * @param value string input value
+     * @param length pad/truncate length
+     * @return padded/truncated value
+     */
+    public static String rpads(String value, int length) {
+        if (value==null) return null;
+        int valueLen = value.length();
+        if (valueLen >= length) {
+            return value.substring(0, length);
+        }
+
+        char[] result = new char[length];
+        value.getChars(0, valueLen, result, 0);
+        for (int i = valueLen; i < length; i++) {
+            result[i] = C_SPACE;
+        }
+        return new String(result);
+    }
+
     public static class Mul {
         private final int nth;
         private final int rows;
