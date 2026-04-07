@@ -1,6 +1,8 @@
 package io.github.epi155.emsql.runtime;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.time.*;
 
 public class J8Time {

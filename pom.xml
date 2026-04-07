@@ -127,6 +127,19 @@
                             <publishingServerId>central</publishingServerId>
                         </configuration>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <configuration>
+                            <tagNameFormat>@{version}</tagNameFormat>
+                            <scmDevelopmentCommitComment>next baseline</scmDevelopmentCommitComment>
+                            <scmReleaseCommitComment>release @{releaseLabel}</scmReleaseCommitComment>
+                            <pushChanges>false</pushChanges>
+                            <arguments>-DskipTests</arguments>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
