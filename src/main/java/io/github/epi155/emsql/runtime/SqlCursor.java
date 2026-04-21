@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 public abstract class SqlCursor<T> implements AutoCloseable, Iterable<T> {
     /**
      * Returns {@code true} if the cursor has more elements.
-     *
+     * <p>
      * (In other words, returns {@code true} if {@link #fetchNext()} would return an element rather than throwing an exception.)
      *
      * @return {@code true} if the cursor has more elements
