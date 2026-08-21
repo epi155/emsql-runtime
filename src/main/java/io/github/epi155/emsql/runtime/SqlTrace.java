@@ -1,5 +1,6 @@
 package io.github.epi155.emsql.runtime;
 
+import io.github.epi155.emsql.fpe.PciSanitizer;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
@@ -15,7 +16,7 @@ public class SqlTrace {
             SqlArg[] args = listArgs.get();
             int k= 0;
             for(val arg: args) {
-                log.trace("i{}) {}: {} = {}", ++k, arg.name, arg.type, arg.value);
+                log.trace("i{}) {}: {} = {}", ++k, arg.name, arg.type, PciSanitizer.sanitizeArg(arg.value));
             }
         }
     }
@@ -30,7 +31,7 @@ public class SqlTrace {
         for(val arg: args) {
             pw.printf("%d) %s: %s = %s%n", ++k, arg.name, arg.type, arg.value);
         }
-        String cause = sw.toString();
+        String cause = PciSanitizer.sanitize(sw.toString());
         log.error(cause, e);
         e.setNextException(new SQLException(cause));
     }
@@ -39,7 +40,7 @@ public class SqlTrace {
         if (log.isTraceEnabled()) {
             int k= 0;
             for(val arg: args) {
-                log.trace("o{}) {}: {} = {}", ++k, arg.name, arg.type, arg.value);
+                log.trace("o{}) {}: {} = {}", ++k, arg.name, arg.type, PciSanitizer.sanitizeArg(arg.value));
             }
         }
     }
