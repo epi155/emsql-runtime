@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 abstract class PanScrubber {
 
     static final String LUHN_PROPERTY = "emsql.luhn";
-    static final String ARGS_PROPERTY = "c";
+    static final String ARGS_PROPERTY = "emsql.trace";
 
     private static final Pattern PAN_PATTERN = Pattern.compile("(?<!\\d)\\d{13,19}(?!\\d)");
 
